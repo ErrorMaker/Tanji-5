@@ -152,7 +152,6 @@ namespace Tanji
             string filePath = ((string[])(e.Data.GetData(DataFormats.FileDrop)))[0];
             IHExtension extension = _tanjiExtensions.LoadExtension(filePath);
             if (extension != null) extension.InitializeExtension();
-
         }
         private void ExtensionViewer_DragEnter(object sender, DragEventArgs e)
         {
