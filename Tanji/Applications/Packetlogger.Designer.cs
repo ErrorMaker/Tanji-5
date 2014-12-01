@@ -200,7 +200,6 @@
             this.Text = "Tanji ~ Packetlogger";
             this.Activated += new System.EventHandler(this.Packetlogger_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Packetlogger_FormClosing);
-            this.Load += new System.EventHandler(this.Packetlogger_Load);
             this.LoggerMenu.ResumeLayout(false);
             this.PacketloggerMenu.ResumeLayout(false);
             this.PacketloggerMenu.PerformLayout();

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Drawing;
 using System.Threading;
 using Sulakore.Protocol;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -18,7 +17,6 @@ namespace Tanji.Applications
 
         private readonly object _queuePushLock;
         private readonly Color _defaultHightlight;
-        private readonly Action<string, Color> _display;
 
         private const string TitlePrefix = "Tanji ~ Packetlogger";
         private const string InfoChunkFormat = "( {0} - {1} )";
@@ -44,9 +42,8 @@ namespace Tanji.Applications
             InitializeComponent();
 
             _queuePushLock = new object();
-            _defaultHightlight = Color.FromArgb(225, 225, 225);
             _displayQueue = new Queue<HMessage>();
-            _display = Display;
+            _defaultHightlight = Color.FromArgb(225, 225, 225);
 
             IncomingHighlight = Color.Firebrick;
             OutgoingHighlight = SystemColors.HotTrack;
@@ -97,15 +94,11 @@ namespace Tanji.Applications
             LoggerTxt.Clear();
         }
 
-        private void Packetlogger_Load(object sender, EventArgs e)
-        {
-            _loaded = true;
-        }
         private void Packetlogger_Activated(object sender, EventArgs e)
         {
+            _loaded = true;
             if (_wasClosed)
             {
-                _loaded = true;
                 _wasClosed = false;
                 Text = TitlePrefix;
 
@@ -139,18 +132,11 @@ namespace Tanji.Applications
         }
         public void PushToQueue(HMessage packet)
         {
-            try
-            {
-                bool toServer = (packet.Destination == HDestinations.Server);
-                if (!ViewOutgoing && toServer || !ViewIncoming && !toServer)
-                    return;
+            bool toServer = (packet.Destination == HDestinations.Server);
+            if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) return;
 
-                _displayQueue.Enqueue(packet);
-
-                if (!_queueRunning)
-                    Task.Factory.StartNew(RunQueue, TaskCreationOptions.LongRunning);
-            }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            _displayQueue.Enqueue(packet); 
+            if (!_queueRunning) Task.Factory.StartNew(RunQueue);
         }
         public void DisplayMessage(string message)
         {
@@ -179,11 +165,11 @@ namespace Tanji.Applications
                     string infoChunk = string.Format(packet.IsCorrupted ? CorruptedChunkFormat : InfoChunkFormat, arguments);
                     string message = string.Format(toServer ? OutgoingFormat : IncomingFormat, infoChunk, packet);
 
-                    while (!_loaded) ;
+                    while (!_loaded) Thread.Sleep(500);
                     Invoke(new MethodInvoker(() => Display(message, toServer ? OutgoingHighlight : IncomingHighlight)));
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            catch (Exception ex) { DisplayMessage(ex.ToString()); }
             finally { _queueRunning = false; }
         }
         private void Display(string message, Color highlight)
