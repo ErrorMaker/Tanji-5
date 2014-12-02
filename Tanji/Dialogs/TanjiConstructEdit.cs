@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Sulakore.Protocol.Components;
+using Sulakore.Protocol.Controls;
 
 namespace Tanji.Dialogs
 {
