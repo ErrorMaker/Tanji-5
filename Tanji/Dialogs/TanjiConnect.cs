@@ -54,7 +54,6 @@ namespace Tanji.Dialogs
             InitializeComponent();
 
             Eavesdropper.DisableCache = true;
-            Eavesdropper.OnEavesRequest += Eavesdropper_OnEavesRequest;
             Eavesdropper.OnEavesResponse += Eavesdropper_OnEavesResponse;
 
             _tanjiC = Color.FromArgb(243, 63, 63);
@@ -197,11 +196,6 @@ namespace Tanji.Dialogs
         #endregion
 
         #region Eavesdropper Event Listeners
-        private void Eavesdropper_OnEavesRequest(object sender, EavesRequestEventArgs e)
-        {
-            if (e.Url.Contains("cacheCheck?r="))
-                e.Cancel = true;
-        }
         private void Eavesdropper_OnEavesResponse(object sender, EavesResponseEventArgs e)
         {
             if (UseCustomClient && e.IsSwf && e.ResponeData.Length > 3000000)
