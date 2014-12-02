@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace Tanji.Components
+namespace Tanji.Controls
 {
     [System.ComponentModel.DesignerCategory("Code")]
     public sealed class TanjiTabControl : TabControl

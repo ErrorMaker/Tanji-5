@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Tanji.Components
+namespace Tanji.Controls
 {
     internal static class Draw
     {

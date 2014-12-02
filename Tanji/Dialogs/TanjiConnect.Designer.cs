@@ -47,13 +47,13 @@
             this.CustomClientTxt = new System.Windows.Forms.TextBox();
             this.CustomChckbx = new System.Windows.Forms.CheckBox();
             this.FiddlerCoreGrpbx = new System.Windows.Forms.GroupBox();
-            this.BrowseBtn = new Tanji.Components.TanjiButton();
+            this.BrowseBtn = new Tanji.Controls.TanjiButton();
             this.ModulusTxt = new System.Windows.Forms.TextBox();
             this.ModulusGrpbx = new System.Windows.Forms.GroupBox();
             this.GameHostTxt = new System.Windows.Forms.ComboBox();
             this.ManualLbl = new System.Windows.Forms.Label();
             this.GamePortTxt = new System.Windows.Forms.ComboBox();
-            this.ProcessBtn = new Tanji.Components.TanjiButton();
+            this.ProcessBtn = new Tanji.Controls.TanjiButton();
             this.ExponentGrpbx.SuspendLayout();
             this.FiddlerCoreGrpbx.SuspendLayout();
             this.ModulusGrpbx.SuspendLayout();
@@ -359,7 +359,7 @@
         private System.Windows.Forms.Timer ATimer;
         private System.Windows.Forms.OpenFileDialog ChooseClientDlg;
         private System.Windows.Forms.Label StatusTxt;
-        private Components.TanjiButton ProcessBtn;
+        private Controls.TanjiButton ProcessBtn;
         private System.Windows.Forms.Panel StatusLeftGlowPnl;
         private System.Windows.Forms.Panel StatusRightGlowPnl;
         private System.Windows.Forms.Panel ManualH;
@@ -371,7 +371,7 @@
         private System.Windows.Forms.TextBox ExponentTxt;
         private System.Windows.Forms.GroupBox ExponentGrpbx;
         private System.Windows.Forms.TextBox CustomClientTxt;
-        private Components.TanjiButton BrowseBtn;
+        private Controls.TanjiButton BrowseBtn;
         private System.Windows.Forms.CheckBox CustomChckbx;
         private System.Windows.Forms.GroupBox FiddlerCoreGrpbx;
         private System.Windows.Forms.TextBox ModulusTxt;

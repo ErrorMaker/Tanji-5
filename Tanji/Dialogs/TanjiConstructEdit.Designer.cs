@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TanjiConstructEdit));
             this.ValueTxt = new System.Windows.Forms.TextBox();
             this.TypeTxt = new System.Windows.Forms.ComboBox();
-            this.UpdateBtn = new Tanji.Components.TanjiButton();
+            this.UpdateBtn = new Tanji.Controls.TanjiButton();
             this.SuspendLayout();
             // 
             // ValueTxt
@@ -91,7 +91,7 @@
 
         #endregion
 
-        private Components.TanjiButton UpdateBtn;
+        private Controls.TanjiButton UpdateBtn;
         private System.Windows.Forms.TextBox ValueTxt;
         private System.Windows.Forms.ComboBox TypeTxt;
     }

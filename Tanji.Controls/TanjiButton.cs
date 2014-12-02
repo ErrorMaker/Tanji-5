@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing.Design;
 
-namespace Tanji.Components
+namespace Tanji.Controls
 {
     [System.ComponentModel.DesignerCategory("Code")]
     public sealed class TanjiButton : Control, IButtonControl
@@ -72,7 +72,7 @@ namespace Tanji.Components
         }
         #endregion
 
-        #region Protected Methods ( Overrides )
+        #region Protected Methods (Overrides)
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.Clear(Color.FromArgb(243, 63, 63));

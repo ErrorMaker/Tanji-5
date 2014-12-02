@@ -7,8 +7,8 @@
     <ProjectGuid>{14430F8C-EF18-4332-B239-3E25FA2755D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tanji.Components</RootNamespace>
-    <AssemblyName>Tanji.Components</AssemblyName>
+    <RootNamespace>Tanji.Controls</RootNamespace>
+    <AssemblyName>Tanji.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

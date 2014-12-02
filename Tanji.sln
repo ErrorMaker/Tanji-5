@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tanji", "Tanji\Tanji.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sulakore", "..\Sulakore\Sulakore\Sulakore.csproj", "{E2504128-D961-4D6A-9453-9D4CAC24627E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tanji.Components", "Tanji.Components\Tanji.Components.csproj", "{14430F8C-EF18-4332-B239-3E25FA2755D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tanji.Controls", "Tanji.Controls\Tanji.Controls.csproj", "{14430F8C-EF18-4332-B239-3E25FA2755D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Tanji Components")]
-[assembly: AssemblyDescription("Custom Tanji Components")]
+[assembly: AssemblyTitle("Tanji Controls")]
+[assembly: AssemblyDescription("Custom Tanji Controls")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Arachis")]
-[assembly: AssemblyProduct("Tanji Components")]
+[assembly: AssemblyProduct("Custom Tanji Controls")]
 [assembly: AssemblyCopyright("Copyright © The Old Nut Man 2014")]
 [assembly: AssemblyTrademark("Kendax")]
 [assembly: AssemblyCulture("")]

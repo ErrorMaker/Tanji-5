@@ -133,9 +133,9 @@
       <Project>{e2504128-d961-4d6a-9453-9d4cac24627e}</Project>
       <Name>Sulakore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tanji.Components\Tanji.Components.csproj">
+    <ProjectReference Include="..\Tanji.Controls\Tanji.Controls.csproj">
       <Project>{14430f8c-ef18-4332-b239-3e25fa2755d3}</Project>
-      <Name>Tanji.Components</Name>
+      <Name>Tanji.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

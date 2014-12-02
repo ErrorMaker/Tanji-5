@@ -34,23 +34,23 @@
             this.ProtocolTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.SchedulesTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.ExtensionsTxt = new System.Windows.Forms.ToolStripStatusLabel();
-            this.TanjiTabs = new Tanji.Components.TanjiTabControl();
+            this.TanjiTabs = new Tanji.Controls.TanjiTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.IPacketTxt = new System.Windows.Forms.TextBox();
-            this.PSendToClientBtn = new Tanji.Components.TanjiButton();
-            this.PSendToServerBtn = new Tanji.Components.TanjiButton();
-            this.tanjiTabControl2 = new Tanji.Components.TanjiTabControl();
+            this.PSendToClientBtn = new Tanji.Controls.TanjiButton();
+            this.PSendToServerBtn = new Tanji.Controls.TanjiButton();
+            this.tanjiTabControl2 = new Tanji.Controls.TanjiTabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.ICEditBtn = new Tanji.Components.TanjiButton();
-            this.ICRemoveBtn = new Tanji.Components.TanjiButton();
-            this.ICTransferBtn = new Tanji.Components.TanjiButton();
-            this.ICMoveDownBtn = new Tanji.Components.TanjiButton();
-            this.ICMoveUpBtn = new Tanji.Components.TanjiButton();
-            this.ICClearBtn = new Tanji.Components.TanjiButton();
-            this.ICAppendBooleanBtn = new Tanji.Components.TanjiButton();
-            this.ICAppendStringBtn = new Tanji.Components.TanjiButton();
-            this.ICAppendIntegerBtn = new Tanji.Components.TanjiButton();
+            this.ICEditBtn = new Tanji.Controls.TanjiButton();
+            this.ICRemoveBtn = new Tanji.Controls.TanjiButton();
+            this.ICTransferBtn = new Tanji.Controls.TanjiButton();
+            this.ICMoveDownBtn = new Tanji.Controls.TanjiButton();
+            this.ICMoveUpBtn = new Tanji.Controls.TanjiButton();
+            this.ICClearBtn = new Tanji.Controls.TanjiButton();
+            this.ICAppendBooleanBtn = new Tanji.Controls.TanjiButton();
+            this.ICAppendStringBtn = new Tanji.Controls.TanjiButton();
+            this.ICAppendIntegerBtn = new Tanji.Controls.TanjiButton();
             this.HeaderLbl = new System.Windows.Forms.Label();
             this.ICHeaderTxt = new System.Windows.Forms.TextBox();
             this.ValueLbl = new System.Windows.Forms.Label();
@@ -69,14 +69,14 @@
             this.ModernShortOutputTxt = new System.Windows.Forms.TextBox();
             this.ModernIntegerOutputTxt = new System.Windows.Forms.TextBox();
             this.ModernShortInputTxt = new System.Windows.Forms.TextBox();
-            this.ModernCypherShortBtn = new Tanji.Components.TanjiButton();
-            this.ModernCypherIntegerBtn = new Tanji.Components.TanjiButton();
-            this.ModernDecypherShortBtn = new Tanji.Components.TanjiButton();
-            this.ModernDecypherIntegerBtn = new Tanji.Components.TanjiButton();
+            this.ModernCypherShortBtn = new Tanji.Controls.TanjiButton();
+            this.ModernCypherIntegerBtn = new Tanji.Controls.TanjiButton();
+            this.ModernDecypherShortBtn = new Tanji.Controls.TanjiButton();
+            this.ModernDecypherIntegerBtn = new Tanji.Controls.TanjiButton();
             this.ModernIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.AdvVL64DecoderGrpbx = new System.Windows.Forms.GroupBox();
             this.ChunksFoundLbl = new System.Windows.Forms.Label();
-            this.ExtractValuesBtn = new Tanji.Components.TanjiButton();
+            this.ExtractValuesBtn = new Tanji.Controls.TanjiButton();
             this.VL64ValueTxt = new System.Windows.Forms.TextBox();
             this.VL64ValueLbl = new System.Windows.Forms.Label();
             this.VL64ChunkTxt = new System.Windows.Forms.TextBox();
@@ -90,10 +90,10 @@
             this.AncientShortOutputTxt = new System.Windows.Forms.TextBox();
             this.AncientIntegerOutputTxt = new System.Windows.Forms.TextBox();
             this.AncientShortInputTxt = new System.Windows.Forms.TextBox();
-            this.AncientCypherShortBtn = new Tanji.Components.TanjiButton();
-            this.AncientCypherIntegerBtn = new Tanji.Components.TanjiButton();
-            this.AncientDecypherShortBtn = new Tanji.Components.TanjiButton();
-            this.AncientDecypherIntegerBtn = new Tanji.Components.TanjiButton();
+            this.AncientCypherShortBtn = new Tanji.Controls.TanjiButton();
+            this.AncientCypherIntegerBtn = new Tanji.Controls.TanjiButton();
+            this.AncientDecypherShortBtn = new Tanji.Controls.TanjiButton();
+            this.AncientDecypherIntegerBtn = new Tanji.Controls.TanjiButton();
             this.AncientIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -104,6 +104,10 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.EExtensionsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.TanjiStrip.SuspendLayout();
             this.TanjiTabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -115,6 +119,7 @@
             this.AdvVL64DecoderGrpbx.SuspendLayout();
             this.AncientEncodingGrpbx.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.EExtensionsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // TanjiStrip
@@ -849,6 +854,7 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
+            this.ExtensionViewer.ContextMenuStrip = this.EExtensionsMenu;
             this.ExtensionViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ExtensionViewer.GridLines = true;
             this.ExtensionViewer.Location = new System.Drawing.Point(3, 3);
@@ -892,8 +898,36 @@
             // 
             // EExtensionsMenu
             // 
+            this.EExtensionsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.uninstallToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.installToolStripMenuItem});
             this.EExtensionsMenu.Name = "ConstructMenu";
-            this.EExtensionsMenu.Size = new System.Drawing.Size(61, 4);
+            this.EExtensionsMenu.Size = new System.Drawing.Size(159, 76);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // uninstallToolStripMenuItem
+            // 
+            this.uninstallToolStripMenuItem.Name = "uninstallToolStripMenuItem";
+            this.uninstallToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.uninstallToolStripMenuItem.Text = "Uninstall";
+            // 
+            // installToolStripMenuItem
+            // 
+            this.installToolStripMenuItem.Name = "installToolStripMenuItem";
+            this.installToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.installToolStripMenuItem.Text = "Install Extension";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
             // 
             // Main
             // 
@@ -928,6 +962,7 @@
             this.AncientEncodingGrpbx.ResumeLayout(false);
             this.AncientEncodingGrpbx.PerformLayout();
             this.tabPage4.ResumeLayout(false);
+            this.EExtensionsMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -939,21 +974,21 @@
         private System.Windows.Forms.ToolStripStatusLabel SchedulesTxt;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
-        private Components.TanjiTabControl TanjiTabs;
+        private Controls.TanjiTabControl TanjiTabs;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage5;
-        private Components.TanjiTabControl tanjiTabControl2;
+        private Controls.TanjiTabControl tanjiTabControl2;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TextBox IPacketTxt;
-        private Components.TanjiButton PSendToClientBtn;
-        private Components.TanjiButton PSendToServerBtn;
+        private Controls.TanjiButton PSendToClientBtn;
+        private Controls.TanjiButton PSendToServerBtn;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
         private System.Windows.Forms.GroupBox AdvVL64DecoderGrpbx;
         private System.Windows.Forms.Label ChunksFoundLbl;
-        private Components.TanjiButton ExtractValuesBtn;
+        private Controls.TanjiButton ExtractValuesBtn;
         private System.Windows.Forms.TextBox VL64ValueTxt;
         private System.Windows.Forms.Label VL64ValueLbl;
         private System.Windows.Forms.TextBox VL64ChunkTxt;
@@ -967,20 +1002,20 @@
         private System.Windows.Forms.TextBox AncientShortOutputTxt;
         private System.Windows.Forms.TextBox AncientIntegerOutputTxt;
         private System.Windows.Forms.TextBox AncientShortInputTxt;
-        private Components.TanjiButton AncientCypherShortBtn;
-        private Components.TanjiButton AncientCypherIntegerBtn;
-        private Components.TanjiButton AncientDecypherShortBtn;
-        private Components.TanjiButton AncientDecypherIntegerBtn;
+        private Controls.TanjiButton AncientCypherShortBtn;
+        private Controls.TanjiButton AncientCypherIntegerBtn;
+        private Controls.TanjiButton AncientDecypherShortBtn;
+        private Controls.TanjiButton AncientDecypherIntegerBtn;
         private System.Windows.Forms.TextBox AncientIntegerInputTxt;
         private System.Windows.Forms.ToolStripStatusLabel ExtensionsTxt;
         private System.Windows.Forms.GroupBox ModernEncodingGrpbx;
         private System.Windows.Forms.TextBox ModernShortOutputTxt;
         private System.Windows.Forms.TextBox ModernIntegerOutputTxt;
         private System.Windows.Forms.TextBox ModernShortInputTxt;
-        private Components.TanjiButton ModernCypherShortBtn;
-        private Components.TanjiButton ModernCypherIntegerBtn;
-        private Components.TanjiButton ModernDecypherShortBtn;
-        private Components.TanjiButton ModernDecypherIntegerBtn;
+        private Controls.TanjiButton ModernCypherShortBtn;
+        private Controls.TanjiButton ModernCypherIntegerBtn;
+        private Controls.TanjiButton ModernDecypherShortBtn;
+        private Controls.TanjiButton ModernDecypherIntegerBtn;
         private System.Windows.Forms.TextBox ModernIntegerInputTxt;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ListView ExtensionViewer;
@@ -993,15 +1028,15 @@
         private System.Windows.Forms.TextBox ICHeaderTxt;
         private System.Windows.Forms.Label ValueLbl;
         private System.Windows.Forms.TextBox ICValueTxt;
-        private Components.TanjiButton ICAppendBooleanBtn;
-        private Components.TanjiButton ICAppendStringBtn;
-        private Components.TanjiButton ICAppendIntegerBtn;
-        private Components.TanjiButton ICClearBtn;
-        private Components.TanjiButton ICEditBtn;
-        private Components.TanjiButton ICRemoveBtn;
-        private Components.TanjiButton ICTransferBtn;
-        private Components.TanjiButton ICMoveDownBtn;
-        private Components.TanjiButton ICMoveUpBtn;
+        private Controls.TanjiButton ICAppendBooleanBtn;
+        private Controls.TanjiButton ICAppendStringBtn;
+        private Controls.TanjiButton ICAppendIntegerBtn;
+        private Controls.TanjiButton ICClearBtn;
+        private Controls.TanjiButton ICEditBtn;
+        private Controls.TanjiButton ICRemoveBtn;
+        private Controls.TanjiButton ICTransferBtn;
+        private Controls.TanjiButton ICMoveDownBtn;
+        private Controls.TanjiButton ICMoveUpBtn;
         private System.Windows.Forms.ContextMenuStrip ICConstructMenu;
         private System.Windows.Forms.ToolStripMenuItem ICSendToClientBtn;
         private System.Windows.Forms.ToolStripMenuItem ICSendToServerBtn;
@@ -1009,6 +1044,10 @@
         private System.Windows.Forms.ToolStripMenuItem ICCopyPacketBtn;
         private System.Windows.Forms.ToolStripStatusLabel ProtocolTxt;
         private System.Windows.Forms.ContextMenuStrip EExtensionsMenu;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uninstallToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem installToolStripMenuItem;
 
     }
 }
