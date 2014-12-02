@@ -2,7 +2,6 @@
 using System.Net;
 using Tanji.Dialogs;
 using Tanji.Services;
-using Sulakore.Habbo;
 using Sulakore.Protocol;
 using Tanji.Applications;
 using System.Windows.Forms;
@@ -10,6 +9,7 @@ using Sulakore.Communication;
 using System.Threading.Tasks;
 using Sulakore.Protocol.Encryption;
 using Sulakore.Communication.Bridge;
+using Sulakore.Protocol.Controls;
 
 namespace Tanji
 {
@@ -17,14 +17,15 @@ namespace Tanji
     {
         #region Private Fields
         private bool _debugging;
-        private byte[] _fakeClientKey, _fakeServerKey;
         private TanjiExtensions _tanjiExtensions;
+        private byte[] _fakeClientKey, _fakeServerKey;
 
         private readonly TanjiConnect _tanjiConnect;
         private readonly Packetlogger _packetloggerF;
         private readonly Action _initiate, _reinitiate;
         private readonly HKeyExchange _fakeClient, _fakeServer;
 
+        private const string ScheduleFormat = "Schedules Active: {0}/{1}";
         private const string CorrPack = "The given packet seems to be corrupted.";
         private const string BadHeader = "The header you've specified does not qualify as an UInt16 type.";
         private const string NotInt32 = "The given value does not qualify as an Int32 type.";
@@ -116,6 +117,8 @@ namespace Tanji
 
             _initiate = Initiate;
             _reinitiate = Reinitiate;
+
+            ISDirectionTxt.SelectedIndex = 1;
         }
         #endregion
 
@@ -335,6 +338,59 @@ namespace Tanji
             else VL64ChunkTxt.Text = VL64ValueTxt.Text = string.Empty;
         }
         #endregion
+
+        #region Scheduler Related Methods
+        private void ISStopAllBtn_Click(object sender, EventArgs e)
+        {
+            ISTanjiScheduler.StopAll();
+            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.SchedulesRunning, ISTanjiScheduler.Items.Count);
+        }
+        private void ISToggleBtn_Click(object sender, EventArgs e)
+        {
+            ISTanjiScheduler.ToggleSelected();
+            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.SchedulesRunning, ISTanjiScheduler.Items.Count);
+        }
+        private void ISRemoveBtn_Click(object sender, EventArgs e)
+        {
+            ISTanjiScheduler.RemoveSelected();
+            ISStopAllBtn.Enabled = (ISTanjiScheduler.Items.Count > 0);
+            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.SchedulesRunning, ISTanjiScheduler.Items.Count);
+        }
+        private void ISEditBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void ISCreateBtn_Click(object sender, EventArgs e)
+        {
+            var packet = GetSchedulerPacket();
+            if (packet == null) return;
+
+            ISStopAllBtn.Enabled = true;
+            ISTanjiScheduler.AddSchedule(new HSchedule(packet, (int)ISIntervalTxt.Value, (int)ISBurstTxt.Value), true, ISDescriptionTxt.Text);
+
+            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.SchedulesRunning, ISTanjiScheduler.Items.Count);
+        }
+
+        private void ISTanjiScheduler_ItemActivate(object sender, EventArgs e)
+        {
+            if (ISTanjiScheduler.SelectedItems.Count == 1)
+                ISToggleBtn_Click(sender, e);
+        }
+        private void ISTanjiScheduler_ScheduleTriggered(object sender, ScheduleTriggeredEventArgs e)
+        {
+            if (e.Packet.IsCorrupted) return;
+
+            if (e.Packet.Destination == HDestinations.Client)
+                AttemptSendToClient(e.Packet);
+            else if (e.Packet.Destination == HDestinations.Server)
+                AttemptSendToServer(e.Packet);
+        }
+        private void ISTanjiScheduler_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (ISEditBtn.Enabled != e.IsSelected)
+                /* ISEditBtn.Enabled = */ ISRemoveBtn.Enabled = ISToggleBtn.Enabled = e.IsSelected;
+        }
+        #endregion
         #endregion
 
         #region Game Connection Event Listeners
@@ -499,6 +555,13 @@ namespace Tanji
             else MessageBox.Show(InjClientCanc, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private HMessage GetSchedulerPacket()
+        {
+            var packet = new HMessage(ISPacketTxt.Text, (HDestinations)(ISDirectionTxt.SelectedIndex + 1));
+            if (!packet.IsCorrupted) return packet;
+            MessageBox.Show(CorrPack, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return null;
+        }
         private HMessage GetConstructerPacket()
         {
             ushort header;
