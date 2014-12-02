@@ -42,6 +42,8 @@
             this.SettingsBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayFiltersBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayVisualSplitBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingsSeperator = new System.Windows.Forms.ToolStripSeparator();
+            this.TopMostBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.PacketloggerStrip = new System.Windows.Forms.StatusStrip();
             this.CapturingINLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.CapturingOUTLbl = new System.Windows.Forms.ToolStripStatusLabel();
@@ -140,7 +142,9 @@
             // 
             this.SettingsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DisplayFiltersBtn,
-            this.DisplayVisualSplitBtn});
+            this.DisplayVisualSplitBtn,
+            this.SettingsSeperator,
+            this.TopMostBtn});
             this.SettingsBtn.Name = "SettingsBtn";
             this.SettingsBtn.Size = new System.Drawing.Size(61, 20);
             this.SettingsBtn.Text = "Settings";
@@ -160,6 +164,19 @@
             this.DisplayVisualSplitBtn.Size = new System.Drawing.Size(172, 22);
             this.DisplayVisualSplitBtn.Text = "Display Visual Split";
             this.DisplayVisualSplitBtn.Click += new System.EventHandler(this.ItemClicked);
+            // 
+            // SettingsSeperator
+            // 
+            this.SettingsSeperator.Name = "SettingsSeperator";
+            this.SettingsSeperator.Size = new System.Drawing.Size(169, 6);
+            // 
+            // TopMostBtn
+            // 
+            this.TopMostBtn.CheckOnClick = true;
+            this.TopMostBtn.Name = "TopMostBtn";
+            this.TopMostBtn.Size = new System.Drawing.Size(172, 22);
+            this.TopMostBtn.Text = "Always On Top";
+            this.TopMostBtn.Click += new System.EventHandler(this.TopMostBtn_Click);
             // 
             // PacketloggerStrip
             // 
@@ -227,5 +244,7 @@
         private System.Windows.Forms.ToolStripStatusLabel CapturingOUTLbl;
         private System.Windows.Forms.ContextMenuStrip LoggerMenu;
         private System.Windows.Forms.ToolStripMenuItem CopyBtn;
+        private System.Windows.Forms.ToolStripSeparator SettingsSeperator;
+        private System.Windows.Forms.ToolStripMenuItem TopMostBtn;
     }
 }

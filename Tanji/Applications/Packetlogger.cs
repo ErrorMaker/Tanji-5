@@ -87,7 +87,12 @@ namespace Tanji.Applications
         }
         private void CopyBtn_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(LoggerTxt.SelectedText);
+            if (!string.IsNullOrEmpty(LoggerTxt.SelectedText))
+                Clipboard.SetText(LoggerTxt.SelectedText);
+        }
+        private void TopMostBtn_Click(object sender, EventArgs e)
+        {
+            TopMost = TopMostBtn.Checked;
         }
         private void ClearLogBtn_Click(object sender, EventArgs e)
         {
@@ -135,7 +140,7 @@ namespace Tanji.Applications
             bool toServer = (packet.Destination == HDestinations.Server);
             if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) return;
 
-            _displayQueue.Enqueue(packet); 
+            _displayQueue.Enqueue(packet);
             if (!_queueRunning) Task.Factory.StartNew(RunQueue);
         }
         public void DisplayMessage(string message)
@@ -165,7 +170,7 @@ namespace Tanji.Applications
                     string infoChunk = string.Format(packet.IsCorrupted ? CorruptedChunkFormat : InfoChunkFormat, arguments);
                     string message = string.Format(toServer ? OutgoingFormat : IncomingFormat, infoChunk, packet);
 
-                    while (!_loaded) Thread.Sleep(500);
+                    while (!_loaded) Thread.Sleep(100);
                     Invoke(new MethodInvoker(() => Display(message, toServer ? OutgoingHighlight : IncomingHighlight)));
                 }
             }
