@@ -148,17 +148,8 @@ namespace Tanji.Dialogs
         {
             ChooseClientDlg.FileName = ChooseClientDlg.SafeFileName;
             if (ChooseClientDlg.ShowDialog() != DialogResult.OK) return;
-            CustomClientTxt.Text = ChooseClientDlg.FileName;
 
-            try { _customClientData = File.ReadAllBytes(ChooseClientDlg.FileName); }
-            catch (Exception ex)
-            {
-                _customClientData = null;
-                CustomChckbx.Checked = false;
-                CustomClientTxt.Text = string.Empty;
-                MessageBox.Show(ex.ToString(), Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            UseCustomClient = (_customClientData != null && _customClientData.Length > 0);
+            ProcessSwf(ChooseClientDlg.FileName);
         }
         private void CustomChckbx_CheckedChanged(object sender, EventArgs e)
         {
@@ -173,6 +164,20 @@ namespace Tanji.Dialogs
         {
             if (TanjiMode == TanjiModes.Manual)
                 GamePortTxt.SelectedIndex = Convert.ToInt32(GameHostTxt.SelectedIndex != 0);
+        }
+
+        private void TanjiConnect_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Effect != DragDropEffects.Copy) return;
+            CustomChckbx.Checked = true;
+
+            if (CustomChckbx.Checked)
+                ProcessSwf(((string[])(e.Data.GetData(DataFormats.FileDrop)))[0]);
+        }
+        private void TanjiConnect_DragEnter(object sender, DragEventArgs e)
+        {
+            if (((string[])(e.Data.GetData(DataFormats.FileDrop)))[0].EndsWith(".swf"))
+                e.Effect = DragDropEffects.Copy;
         }
 
         private void TanjiConnect_FormClosing(object sender, FormClosingEventArgs e)
@@ -319,6 +324,21 @@ namespace Tanji.Dialogs
                 ProcessBtn.Click -= Cancel_Click;
                 ProcessBtn.Click += Connect_Click;
             }
+        }
+        private void ProcessSwf(string path)
+        {
+            CustomClientTxt.Text = path;
+            Cursor = Cursors.WaitCursor;
+            try { _customClientData = File.ReadAllBytes(path); }
+            catch (Exception ex)
+            {
+                _customClientData = null;
+                CustomChckbx.Checked = false;
+                CustomClientTxt.Text = string.Empty;
+                MessageBox.Show(ex.ToString(), Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            UseCustomClient = (_customClientData != null && _customClientData.Length > 0);
+            Cursor = Cursors.Default;
         }
         private bool PromptUseCustomClient()
         {

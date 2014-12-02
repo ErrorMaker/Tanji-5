@@ -312,6 +312,7 @@
             // 
             // TanjiConnect
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -342,6 +343,8 @@
             this.Text = "Tanji ~ Connection Setup [Automatic]";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TanjiConnect_FormClosing);
             this.Load += new System.EventHandler(this.TanjiConnect_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.TanjiConnect_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.TanjiConnect_DragEnter);
             this.ExponentGrpbx.ResumeLayout(false);
             this.ExponentGrpbx.PerformLayout();
             this.FiddlerCoreGrpbx.ResumeLayout(false);
