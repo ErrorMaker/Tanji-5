@@ -25,6 +25,7 @@ namespace Tanji
         private readonly Action _initiate, _reinitiate;
         private readonly HKeyExchange _fakeClient, _fakeServer;
 
+        private const string ProtocolFormat = "Protocol: {0}";
         private const string ScheduleFormat = "Schedules Active: {0}/{1}";
         private const string CorrPack = "The given packet seems to be corrupted.";
         private const string BadHeader = "The header you've specified does not qualify as an UInt16 type.";
@@ -501,8 +502,11 @@ namespace Tanji
             if (InvokeRequired) { Invoke(_initiate); return; }
 
             _tanjiConnect.ShowDialog();
+
             const string TanjiTitleFormat = "Tanji ~ Connected[{0}:{1}]";
             Text = string.Format(TanjiTitleFormat, Game.Host, Game.Port);
+
+            ProtocolTxt.Text = string.Format(ProtocolFormat, Game.Protocol);
 
             Show();
             BringToFront();
@@ -567,6 +571,7 @@ namespace Tanji
             ushort header;
             if (ushort.TryParse(ICHeaderTxt.Text, out header))
                 return ICTanjiConstructer.Construct(header);
+
             MessageBox.Show(BadHeader, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             return null;
         }
