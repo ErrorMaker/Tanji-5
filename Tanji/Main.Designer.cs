@@ -35,13 +35,13 @@
             this.SchedulesTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.ExtensionsTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.TanjiTabs = new Tanji.Controls.TanjiTabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.InjectionTab = new System.Windows.Forms.TabPage();
             this.IPacketTxt = new System.Windows.Forms.TextBox();
             this.PSendToClientBtn = new Tanji.Controls.TanjiButton();
             this.PSendToServerBtn = new Tanji.Controls.TanjiButton();
-            this.tanjiTabControl2 = new Tanji.Controls.TanjiTabControl();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.IInjectionTabs = new Tanji.Controls.TanjiTabControl();
+            this.IPrimitiveTab = new System.Windows.Forms.TabPage();
+            this.IConstructerTab = new System.Windows.Forms.TabPage();
             this.ICEditBtn = new Tanji.Controls.TanjiButton();
             this.ICRemoveBtn = new Tanji.Controls.TanjiButton();
             this.ICTransferBtn = new Tanji.Controls.TanjiButton();
@@ -59,9 +59,9 @@
             this.ICConstructMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ICSendToClientBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ICSendToServerBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ConSplit = new System.Windows.Forms.ToolStripSeparator();
+            this.IConstructSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.ICCopyPacketBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.ISchedulerTab = new System.Windows.Forms.TabPage();
             this.ISTanjiScheduler = new Sulakore.Protocol.Controls.HMScheduler();
             this.ISBurstLbl = new System.Windows.Forms.Label();
             this.ISBurstTxt = new System.Windows.Forms.NumericUpDown();
@@ -78,9 +78,9 @@
             this.ISEditBtn = new Tanji.Controls.TanjiButton();
             this.ISRemoveBtn = new Tanji.Controls.TanjiButton();
             this.ISCreateBtn = new Tanji.Controls.TanjiButton();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ITriggersTab = new System.Windows.Forms.TabPage();
+            this.IFiltersTab = new System.Windows.Forms.TabPage();
+            this.EncoderDecoderTab = new System.Windows.Forms.TabPage();
             this.ModernEncodingGrpbx = new System.Windows.Forms.GroupBox();
             this.ModernShortOutputTxt = new System.Windows.Forms.TextBox();
             this.ModernIntegerOutputTxt = new System.Windows.Forms.TextBox();
@@ -90,7 +90,7 @@
             this.ModernDecypherShortBtn = new Tanji.Controls.TanjiButton();
             this.ModernDecypherIntegerBtn = new Tanji.Controls.TanjiButton();
             this.ModernIntegerInputTxt = new System.Windows.Forms.TextBox();
-            this.AdvVL64DecoderGrpbx = new System.Windows.Forms.GroupBox();
+            this.EDAdvVL64DecoderGrpbx = new System.Windows.Forms.GroupBox();
             this.ChunksFoundLbl = new System.Windows.Forms.Label();
             this.ExtractValuesBtn = new Tanji.Controls.TanjiButton();
             this.VL64ValueTxt = new System.Windows.Forms.TextBox();
@@ -111,33 +111,34 @@
             this.AncientDecypherShortBtn = new Tanji.Controls.TanjiButton();
             this.AncientDecypherIntegerBtn = new Tanji.Controls.TanjiButton();
             this.AncientIntegerInputTxt = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.ToolboxTab = new System.Windows.Forms.TabPage();
+            this.ExtensionsTab = new System.Windows.Forms.TabPage();
             this.ExtensionViewer = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ENameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EAuthorCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EVersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ELocationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EStatusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EExtensionsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.EOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.EUninstallBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.EExtensionsSeperator = new System.Windows.Forms.ToolStripSeparator();
+            this.EInstallBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.OptionsTab = new System.Windows.Forms.TabPage();
             this.TanjiStrip.SuspendLayout();
             this.TanjiTabs.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tanjiTabControl2.SuspendLayout();
-            this.tabPage7.SuspendLayout();
+            this.InjectionTab.SuspendLayout();
+            this.IInjectionTabs.SuspendLayout();
+            this.IConstructerTab.SuspendLayout();
             this.ICConstructMenu.SuspendLayout();
-            this.tabPage8.SuspendLayout();
+            this.ISchedulerTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ISIntervalTxt)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.EncoderDecoderTab.SuspendLayout();
             this.ModernEncodingGrpbx.SuspendLayout();
-            this.AdvVL64DecoderGrpbx.SuspendLayout();
+            this.EDAdvVL64DecoderGrpbx.SuspendLayout();
             this.AncientEncodingGrpbx.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.ExtensionsTab.SuspendLayout();
             this.EExtensionsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -177,11 +178,11 @@
             // 
             // TanjiTabs
             // 
-            this.TanjiTabs.Controls.Add(this.tabPage1);
-            this.TanjiTabs.Controls.Add(this.tabPage2);
-            this.TanjiTabs.Controls.Add(this.tabPage3);
-            this.TanjiTabs.Controls.Add(this.tabPage4);
-            this.TanjiTabs.Controls.Add(this.tabPage5);
+            this.TanjiTabs.Controls.Add(this.InjectionTab);
+            this.TanjiTabs.Controls.Add(this.EncoderDecoderTab);
+            this.TanjiTabs.Controls.Add(this.ToolboxTab);
+            this.TanjiTabs.Controls.Add(this.ExtensionsTab);
+            this.TanjiTabs.Controls.Add(this.OptionsTab);
             this.TanjiTabs.DisplayBoundary = true;
             this.TanjiTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TanjiTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -193,19 +194,19 @@
             this.TanjiTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TanjiTabs.TabIndex = 0;
             // 
-            // tabPage1
+            // InjectionTab
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.IPacketTxt);
-            this.tabPage1.Controls.Add(this.PSendToClientBtn);
-            this.tabPage1.Controls.Add(this.PSendToServerBtn);
-            this.tabPage1.Controls.Add(this.tanjiTabControl2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 28);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(471, 313);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Injection";
+            this.InjectionTab.BackColor = System.Drawing.Color.White;
+            this.InjectionTab.Controls.Add(this.IPacketTxt);
+            this.InjectionTab.Controls.Add(this.PSendToClientBtn);
+            this.InjectionTab.Controls.Add(this.PSendToServerBtn);
+            this.InjectionTab.Controls.Add(this.IInjectionTabs);
+            this.InjectionTab.Location = new System.Drawing.Point(4, 28);
+            this.InjectionTab.Name = "InjectionTab";
+            this.InjectionTab.Padding = new System.Windows.Forms.Padding(3);
+            this.InjectionTab.Size = new System.Drawing.Size(471, 313);
+            this.InjectionTab.TabIndex = 0;
+            this.InjectionTab.Text = "Injection";
             // 
             // IPacketTxt
             // 
@@ -240,59 +241,59 @@
             this.PSendToServerBtn.Text = "Send To Server";
             this.PSendToServerBtn.Click += new System.EventHandler(this.SendToServerBtn_Click);
             // 
-            // tanjiTabControl2
+            // IInjectionTabs
             // 
-            this.tanjiTabControl2.Alignment = System.Windows.Forms.TabAlignment.Right;
-            this.tanjiTabControl2.Controls.Add(this.tabPage6);
-            this.tanjiTabControl2.Controls.Add(this.tabPage7);
-            this.tanjiTabControl2.Controls.Add(this.tabPage8);
-            this.tanjiTabControl2.Controls.Add(this.tabPage9);
-            this.tanjiTabControl2.Controls.Add(this.tabPage10);
-            this.tanjiTabControl2.DisplayBoundary = true;
-            this.tanjiTabControl2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tanjiTabControl2.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tanjiTabControl2.ItemSize = new System.Drawing.Size(66, 25);
-            this.tanjiTabControl2.Location = new System.Drawing.Point(3, 3);
-            this.tanjiTabControl2.Multiline = true;
-            this.tanjiTabControl2.Name = "tanjiTabControl2";
-            this.tanjiTabControl2.SelectedIndex = 0;
-            this.tanjiTabControl2.Size = new System.Drawing.Size(465, 276);
-            this.tanjiTabControl2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tanjiTabControl2.TabIndex = 0;
+            this.IInjectionTabs.Alignment = System.Windows.Forms.TabAlignment.Right;
+            this.IInjectionTabs.Controls.Add(this.IPrimitiveTab);
+            this.IInjectionTabs.Controls.Add(this.IConstructerTab);
+            this.IInjectionTabs.Controls.Add(this.ISchedulerTab);
+            this.IInjectionTabs.Controls.Add(this.ITriggersTab);
+            this.IInjectionTabs.Controls.Add(this.IFiltersTab);
+            this.IInjectionTabs.DisplayBoundary = true;
+            this.IInjectionTabs.Dock = System.Windows.Forms.DockStyle.Top;
+            this.IInjectionTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.IInjectionTabs.ItemSize = new System.Drawing.Size(66, 25);
+            this.IInjectionTabs.Location = new System.Drawing.Point(3, 3);
+            this.IInjectionTabs.Multiline = true;
+            this.IInjectionTabs.Name = "IInjectionTabs";
+            this.IInjectionTabs.SelectedIndex = 0;
+            this.IInjectionTabs.Size = new System.Drawing.Size(465, 276);
+            this.IInjectionTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.IInjectionTabs.TabIndex = 0;
             // 
-            // tabPage6
+            // IPrimitiveTab
             // 
-            this.tabPage6.BackColor = System.Drawing.Color.White;
-            this.tabPage6.Location = new System.Drawing.Point(4, 4);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(391, 268);
-            this.tabPage6.TabIndex = 0;
-            this.tabPage6.Text = "Primitive";
+            this.IPrimitiveTab.BackColor = System.Drawing.Color.White;
+            this.IPrimitiveTab.Location = new System.Drawing.Point(4, 4);
+            this.IPrimitiveTab.Name = "IPrimitiveTab";
+            this.IPrimitiveTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IPrimitiveTab.Size = new System.Drawing.Size(391, 268);
+            this.IPrimitiveTab.TabIndex = 0;
+            this.IPrimitiveTab.Text = "Primitive";
             // 
-            // tabPage7
+            // IConstructerTab
             // 
-            this.tabPage7.BackColor = System.Drawing.Color.White;
-            this.tabPage7.Controls.Add(this.ICEditBtn);
-            this.tabPage7.Controls.Add(this.ICRemoveBtn);
-            this.tabPage7.Controls.Add(this.ICTransferBtn);
-            this.tabPage7.Controls.Add(this.ICMoveDownBtn);
-            this.tabPage7.Controls.Add(this.ICMoveUpBtn);
-            this.tabPage7.Controls.Add(this.ICClearBtn);
-            this.tabPage7.Controls.Add(this.ICAppendBooleanBtn);
-            this.tabPage7.Controls.Add(this.ICAppendStringBtn);
-            this.tabPage7.Controls.Add(this.ICAppendIntegerBtn);
-            this.tabPage7.Controls.Add(this.HeaderLbl);
-            this.tabPage7.Controls.Add(this.ICHeaderTxt);
-            this.tabPage7.Controls.Add(this.ValueLbl);
-            this.tabPage7.Controls.Add(this.ICValueTxt);
-            this.tabPage7.Controls.Add(this.ICTanjiConstructer);
-            this.tabPage7.Location = new System.Drawing.Point(4, 4);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(391, 268);
-            this.tabPage7.TabIndex = 1;
-            this.tabPage7.Text = "Constructer";
+            this.IConstructerTab.BackColor = System.Drawing.Color.White;
+            this.IConstructerTab.Controls.Add(this.ICEditBtn);
+            this.IConstructerTab.Controls.Add(this.ICRemoveBtn);
+            this.IConstructerTab.Controls.Add(this.ICTransferBtn);
+            this.IConstructerTab.Controls.Add(this.ICMoveDownBtn);
+            this.IConstructerTab.Controls.Add(this.ICMoveUpBtn);
+            this.IConstructerTab.Controls.Add(this.ICClearBtn);
+            this.IConstructerTab.Controls.Add(this.ICAppendBooleanBtn);
+            this.IConstructerTab.Controls.Add(this.ICAppendStringBtn);
+            this.IConstructerTab.Controls.Add(this.ICAppendIntegerBtn);
+            this.IConstructerTab.Controls.Add(this.HeaderLbl);
+            this.IConstructerTab.Controls.Add(this.ICHeaderTxt);
+            this.IConstructerTab.Controls.Add(this.ValueLbl);
+            this.IConstructerTab.Controls.Add(this.ICValueTxt);
+            this.IConstructerTab.Controls.Add(this.ICTanjiConstructer);
+            this.IConstructerTab.Location = new System.Drawing.Point(4, 4);
+            this.IConstructerTab.Name = "IConstructerTab";
+            this.IConstructerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IConstructerTab.Size = new System.Drawing.Size(391, 268);
+            this.IConstructerTab.TabIndex = 1;
+            this.IConstructerTab.Text = "Constructer";
             // 
             // ICEditBtn
             // 
@@ -444,7 +445,7 @@
             // ICTanjiConstructer
             // 
             this.ICTanjiConstructer.ContextMenuStrip = this.ICConstructMenu;
-            this.ICTanjiConstructer.Destination = Sulakore.Protocol.HDestinations.Server;
+            this.ICTanjiConstructer.Destination = Sulakore.Protocol.HDestination.Server;
             this.ICTanjiConstructer.FullRowSelect = true;
             this.ICTanjiConstructer.GridLines = true;
             this.ICTanjiConstructer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -452,7 +453,7 @@
             this.ICTanjiConstructer.LockColumns = false;
             this.ICTanjiConstructer.MultiSelect = false;
             this.ICTanjiConstructer.Name = "ICTanjiConstructer";
-            this.ICTanjiConstructer.Protocol = Sulakore.Protocol.HProtocols.Modern;
+            this.ICTanjiConstructer.Protocol = Sulakore.Protocol.HProtocol.Modern;
             this.ICTanjiConstructer.ShowItemToolTips = true;
             this.ICTanjiConstructer.Size = new System.Drawing.Size(379, 161);
             this.ICTanjiConstructer.TabIndex = 0;
@@ -466,7 +467,7 @@
             this.ICConstructMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ICSendToClientBtn,
             this.ICSendToServerBtn,
-            this.ConSplit,
+            this.IConstructSeperator,
             this.ICCopyPacketBtn});
             this.ICConstructMenu.Name = "ConstructMenu";
             this.ICConstructMenu.Size = new System.Drawing.Size(153, 76);
@@ -485,10 +486,10 @@
             this.ICSendToServerBtn.Text = "Send To Server";
             this.ICSendToServerBtn.Click += new System.EventHandler(this.ICSendToServerBtn_Click);
             // 
-            // ConSplit
+            // IConstructSeperator
             // 
-            this.ConSplit.Name = "ConSplit";
-            this.ConSplit.Size = new System.Drawing.Size(149, 6);
+            this.IConstructSeperator.Name = "IConstructSeperator";
+            this.IConstructSeperator.Size = new System.Drawing.Size(149, 6);
             // 
             // ICCopyPacketBtn
             // 
@@ -497,31 +498,31 @@
             this.ICCopyPacketBtn.Text = "Copy Packet";
             this.ICCopyPacketBtn.Click += new System.EventHandler(this.ICCopyPacketBtn_Click);
             // 
-            // tabPage8
+            // ISchedulerTab
             // 
-            this.tabPage8.BackColor = System.Drawing.Color.White;
-            this.tabPage8.Controls.Add(this.ISTanjiScheduler);
-            this.tabPage8.Controls.Add(this.ISBurstLbl);
-            this.tabPage8.Controls.Add(this.ISBurstTxt);
-            this.tabPage8.Controls.Add(this.ISIntervalLbl);
-            this.tabPage8.Controls.Add(this.ISIntervalTxt);
-            this.tabPage8.Controls.Add(this.ISDirectionLbl);
-            this.tabPage8.Controls.Add(this.ISDirectionTxt);
-            this.tabPage8.Controls.Add(this.ISPacketLbl);
-            this.tabPage8.Controls.Add(this.ISPacketTxt);
-            this.tabPage8.Controls.Add(this.ISDescriptionLbl);
-            this.tabPage8.Controls.Add(this.ISDescriptionTxt);
-            this.tabPage8.Controls.Add(this.ISToggleBtn);
-            this.tabPage8.Controls.Add(this.ISStopAllBtn);
-            this.tabPage8.Controls.Add(this.ISEditBtn);
-            this.tabPage8.Controls.Add(this.ISRemoveBtn);
-            this.tabPage8.Controls.Add(this.ISCreateBtn);
-            this.tabPage8.Location = new System.Drawing.Point(4, 4);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(391, 268);
-            this.tabPage8.TabIndex = 2;
-            this.tabPage8.Text = "Scheduler";
+            this.ISchedulerTab.BackColor = System.Drawing.Color.White;
+            this.ISchedulerTab.Controls.Add(this.ISTanjiScheduler);
+            this.ISchedulerTab.Controls.Add(this.ISBurstLbl);
+            this.ISchedulerTab.Controls.Add(this.ISBurstTxt);
+            this.ISchedulerTab.Controls.Add(this.ISIntervalLbl);
+            this.ISchedulerTab.Controls.Add(this.ISIntervalTxt);
+            this.ISchedulerTab.Controls.Add(this.ISDirectionLbl);
+            this.ISchedulerTab.Controls.Add(this.ISDirectionTxt);
+            this.ISchedulerTab.Controls.Add(this.ISPacketLbl);
+            this.ISchedulerTab.Controls.Add(this.ISPacketTxt);
+            this.ISchedulerTab.Controls.Add(this.ISDescriptionLbl);
+            this.ISchedulerTab.Controls.Add(this.ISDescriptionTxt);
+            this.ISchedulerTab.Controls.Add(this.ISToggleBtn);
+            this.ISchedulerTab.Controls.Add(this.ISStopAllBtn);
+            this.ISchedulerTab.Controls.Add(this.ISEditBtn);
+            this.ISchedulerTab.Controls.Add(this.ISRemoveBtn);
+            this.ISchedulerTab.Controls.Add(this.ISCreateBtn);
+            this.ISchedulerTab.Location = new System.Drawing.Point(4, 4);
+            this.ISchedulerTab.Name = "ISchedulerTab";
+            this.ISchedulerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ISchedulerTab.Size = new System.Drawing.Size(391, 268);
+            this.ISchedulerTab.TabIndex = 2;
+            this.ISchedulerTab.Text = "Scheduler";
             // 
             // ISTanjiScheduler
             // 
@@ -712,38 +713,38 @@
             this.ISCreateBtn.Text = "Create";
             this.ISCreateBtn.Click += new System.EventHandler(this.ISCreateBtn_Click);
             // 
-            // tabPage9
+            // ITriggersTab
             // 
-            this.tabPage9.BackColor = System.Drawing.Color.White;
-            this.tabPage9.Location = new System.Drawing.Point(4, 4);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(391, 268);
-            this.tabPage9.TabIndex = 3;
-            this.tabPage9.Text = "Triggers";
+            this.ITriggersTab.BackColor = System.Drawing.Color.White;
+            this.ITriggersTab.Location = new System.Drawing.Point(4, 4);
+            this.ITriggersTab.Name = "ITriggersTab";
+            this.ITriggersTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ITriggersTab.Size = new System.Drawing.Size(391, 268);
+            this.ITriggersTab.TabIndex = 3;
+            this.ITriggersTab.Text = "Triggers";
             // 
-            // tabPage10
+            // IFiltersTab
             // 
-            this.tabPage10.BackColor = System.Drawing.Color.White;
-            this.tabPage10.Location = new System.Drawing.Point(4, 4);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(391, 268);
-            this.tabPage10.TabIndex = 4;
-            this.tabPage10.Text = "Filters";
+            this.IFiltersTab.BackColor = System.Drawing.Color.White;
+            this.IFiltersTab.Location = new System.Drawing.Point(4, 4);
+            this.IFiltersTab.Name = "IFiltersTab";
+            this.IFiltersTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IFiltersTab.Size = new System.Drawing.Size(391, 268);
+            this.IFiltersTab.TabIndex = 4;
+            this.IFiltersTab.Text = "Filters";
             // 
-            // tabPage2
+            // EncoderDecoderTab
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.White;
-            this.tabPage2.Controls.Add(this.ModernEncodingGrpbx);
-            this.tabPage2.Controls.Add(this.AdvVL64DecoderGrpbx);
-            this.tabPage2.Controls.Add(this.AncientEncodingGrpbx);
-            this.tabPage2.Location = new System.Drawing.Point(4, 28);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(471, 313);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Encoder/Decoder";
+            this.EncoderDecoderTab.BackColor = System.Drawing.Color.White;
+            this.EncoderDecoderTab.Controls.Add(this.ModernEncodingGrpbx);
+            this.EncoderDecoderTab.Controls.Add(this.EDAdvVL64DecoderGrpbx);
+            this.EncoderDecoderTab.Controls.Add(this.AncientEncodingGrpbx);
+            this.EncoderDecoderTab.Location = new System.Drawing.Point(4, 28);
+            this.EncoderDecoderTab.Name = "EncoderDecoderTab";
+            this.EncoderDecoderTab.Padding = new System.Windows.Forms.Padding(3);
+            this.EncoderDecoderTab.Size = new System.Drawing.Size(471, 313);
+            this.EncoderDecoderTab.TabIndex = 1;
+            this.EncoderDecoderTab.Text = "Encoder/Decoder";
             // 
             // ModernEncodingGrpbx
             // 
@@ -838,23 +839,23 @@
             this.ModernIntegerInputTxt.TabIndex = 10;
             this.ModernIntegerInputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // AdvVL64DecoderGrpbx
+            // EDAdvVL64DecoderGrpbx
             // 
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.ChunksFoundLbl);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.ExtractValuesBtn);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64ValueTxt);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64ValueLbl);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64ChunkTxt);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64ChunkLbl);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64StringTxt);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64StringLbl);
-            this.AdvVL64DecoderGrpbx.Controls.Add(this.VL64Chunks);
-            this.AdvVL64DecoderGrpbx.Location = new System.Drawing.Point(5, 174);
-            this.AdvVL64DecoderGrpbx.Name = "AdvVL64DecoderGrpbx";
-            this.AdvVL64DecoderGrpbx.Size = new System.Drawing.Size(460, 135);
-            this.AdvVL64DecoderGrpbx.TabIndex = 20;
-            this.AdvVL64DecoderGrpbx.TabStop = false;
-            this.AdvVL64DecoderGrpbx.Text = "Advanced VL64 Decoder ( Multiple Value Extractor )";
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.ChunksFoundLbl);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.ExtractValuesBtn);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64ValueTxt);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64ValueLbl);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64ChunkTxt);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64ChunkLbl);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64StringTxt);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64StringLbl);
+            this.EDAdvVL64DecoderGrpbx.Controls.Add(this.VL64Chunks);
+            this.EDAdvVL64DecoderGrpbx.Location = new System.Drawing.Point(5, 174);
+            this.EDAdvVL64DecoderGrpbx.Name = "EDAdvVL64DecoderGrpbx";
+            this.EDAdvVL64DecoderGrpbx.Size = new System.Drawing.Size(460, 135);
+            this.EDAdvVL64DecoderGrpbx.TabIndex = 20;
+            this.EDAdvVL64DecoderGrpbx.TabStop = false;
+            this.EDAdvVL64DecoderGrpbx.Text = "Advanced VL64 Decoder ( Multiple Value Extractor )";
             // 
             // ChunksFoundLbl
             // 
@@ -1049,109 +1050,121 @@
             this.AncientIntegerInputTxt.TabIndex = 10;
             this.AncientIntegerInputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // tabPage3
+            // ToolboxTab
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.White;
-            this.tabPage3.Location = new System.Drawing.Point(4, 28);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(471, 313);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Toolbox";
+            this.ToolboxTab.BackColor = System.Drawing.Color.White;
+            this.ToolboxTab.Location = new System.Drawing.Point(4, 28);
+            this.ToolboxTab.Name = "ToolboxTab";
+            this.ToolboxTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ToolboxTab.Size = new System.Drawing.Size(471, 313);
+            this.ToolboxTab.TabIndex = 2;
+            this.ToolboxTab.Text = "Toolbox";
             // 
-            // tabPage4
+            // ExtensionsTab
             // 
-            this.tabPage4.BackColor = System.Drawing.Color.White;
-            this.tabPage4.Controls.Add(this.ExtensionViewer);
-            this.tabPage4.Location = new System.Drawing.Point(4, 28);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(471, 313);
-            this.tabPage4.TabIndex = 5;
-            this.tabPage4.Text = "Extensions";
+            this.ExtensionsTab.BackColor = System.Drawing.Color.White;
+            this.ExtensionsTab.Controls.Add(this.ExtensionViewer);
+            this.ExtensionsTab.Location = new System.Drawing.Point(4, 28);
+            this.ExtensionsTab.Name = "ExtensionsTab";
+            this.ExtensionsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ExtensionsTab.Size = new System.Drawing.Size(471, 313);
+            this.ExtensionsTab.TabIndex = 5;
+            this.ExtensionsTab.Text = "Extensions";
             // 
             // ExtensionViewer
             // 
             this.ExtensionViewer.AllowDrop = true;
             this.ExtensionViewer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
+            this.ENameCol,
+            this.EAuthorCol,
+            this.EVersionCol,
+            this.ELocationCol,
+            this.EStatusCol});
             this.ExtensionViewer.ContextMenuStrip = this.EExtensionsMenu;
             this.ExtensionViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExtensionViewer.FullRowSelect = true;
             this.ExtensionViewer.GridLines = true;
+            this.ExtensionViewer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ExtensionViewer.Location = new System.Drawing.Point(3, 3);
+            this.ExtensionViewer.MultiSelect = false;
             this.ExtensionViewer.Name = "ExtensionViewer";
+            this.ExtensionViewer.ShowItemToolTips = true;
             this.ExtensionViewer.Size = new System.Drawing.Size(465, 307);
             this.ExtensionViewer.TabIndex = 0;
             this.ExtensionViewer.UseCompatibleStateImageBehavior = false;
             this.ExtensionViewer.View = System.Windows.Forms.View.Details;
+            this.ExtensionViewer.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ExtensionViewer_ColumnWidthChanging);
             this.ExtensionViewer.DragDrop += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragDrop);
             this.ExtensionViewer.DragEnter += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragEnter);
             // 
-            // columnHeader1
+            // ENameCol
             // 
-            this.columnHeader1.Text = "Identifier";
-            this.columnHeader1.Width = 175;
+            this.ENameCol.Text = "Name";
+            this.ENameCol.Width = 90;
             // 
-            // columnHeader2
+            // EAuthorCol
             // 
-            this.columnHeader2.Text = "Author(s)";
-            this.columnHeader2.Width = 111;
+            this.EAuthorCol.Text = "Author";
+            this.EAuthorCol.Width = 70;
             // 
-            // columnHeader3
+            // EVersionCol
             // 
-            this.columnHeader3.Text = "Version";
-            this.columnHeader3.Width = 72;
+            this.EVersionCol.Text = "Version";
+            this.EVersionCol.Width = 50;
             // 
-            // columnHeader4
+            // ELocationCol
             // 
-            this.columnHeader4.Text = "Status";
-            this.columnHeader4.Width = 79;
+            this.ELocationCol.Text = "Location";
+            this.ELocationCol.Width = 173;
+            // 
+            // EStatusCol
+            // 
+            this.EStatusCol.Text = "Status";
             // 
             // EExtensionsMenu
             // 
             this.EExtensionsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.uninstallToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.installToolStripMenuItem});
+            this.EOpenBtn,
+            this.EUninstallBtn,
+            this.EExtensionsSeperator,
+            this.EInstallBtn});
             this.EExtensionsMenu.Name = "ConstructMenu";
             this.EExtensionsMenu.Size = new System.Drawing.Size(159, 76);
             // 
-            // openToolStripMenuItem
+            // EOpenBtn
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.openToolStripMenuItem.Text = "Open";
+            this.EOpenBtn.Enabled = false;
+            this.EOpenBtn.Name = "EOpenBtn";
+            this.EOpenBtn.Size = new System.Drawing.Size(158, 22);
+            this.EOpenBtn.Text = "Open";
             // 
-            // uninstallToolStripMenuItem
+            // EUninstallBtn
             // 
-            this.uninstallToolStripMenuItem.Name = "uninstallToolStripMenuItem";
-            this.uninstallToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.uninstallToolStripMenuItem.Text = "Uninstall";
+            this.EUninstallBtn.Enabled = false;
+            this.EUninstallBtn.Name = "EUninstallBtn";
+            this.EUninstallBtn.Size = new System.Drawing.Size(158, 22);
+            this.EUninstallBtn.Text = "Uninstall";
             // 
-            // toolStripSeparator1
+            // EExtensionsSeperator
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
+            this.EExtensionsSeperator.Name = "EExtensionsSeperator";
+            this.EExtensionsSeperator.Size = new System.Drawing.Size(155, 6);
             // 
-            // installToolStripMenuItem
+            // EInstallBtn
             // 
-            this.installToolStripMenuItem.Name = "installToolStripMenuItem";
-            this.installToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.installToolStripMenuItem.Text = "Install Extension";
+            this.EInstallBtn.Name = "EInstallBtn";
+            this.EInstallBtn.Size = new System.Drawing.Size(158, 22);
+            this.EInstallBtn.Text = "Install Extension";
             // 
-            // tabPage5
+            // OptionsTab
             // 
-            this.tabPage5.BackColor = System.Drawing.Color.White;
-            this.tabPage5.Location = new System.Drawing.Point(4, 28);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(471, 313);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Options";
+            this.OptionsTab.BackColor = System.Drawing.Color.White;
+            this.OptionsTab.Location = new System.Drawing.Point(4, 28);
+            this.OptionsTab.Name = "OptionsTab";
+            this.OptionsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.OptionsTab.Size = new System.Drawing.Size(471, 313);
+            this.OptionsTab.TabIndex = 4;
+            this.OptionsTab.Text = "Options";
             // 
             // Main
             // 
@@ -1167,29 +1180,30 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tanji  ~ Connected[Host:Port]";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.TanjiStrip.ResumeLayout(false);
             this.TanjiStrip.PerformLayout();
             this.TanjiTabs.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tanjiTabControl2.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage7.PerformLayout();
+            this.InjectionTab.ResumeLayout(false);
+            this.InjectionTab.PerformLayout();
+            this.IInjectionTabs.ResumeLayout(false);
+            this.IConstructerTab.ResumeLayout(false);
+            this.IConstructerTab.PerformLayout();
             this.ICConstructMenu.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage8.PerformLayout();
+            this.ISchedulerTab.ResumeLayout(false);
+            this.ISchedulerTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ISIntervalTxt)).EndInit();
-            this.tabPage2.ResumeLayout(false);
+            this.EncoderDecoderTab.ResumeLayout(false);
             this.ModernEncodingGrpbx.ResumeLayout(false);
             this.ModernEncodingGrpbx.PerformLayout();
-            this.AdvVL64DecoderGrpbx.ResumeLayout(false);
-            this.AdvVL64DecoderGrpbx.PerformLayout();
+            this.EDAdvVL64DecoderGrpbx.ResumeLayout(false);
+            this.EDAdvVL64DecoderGrpbx.PerformLayout();
             this.AncientEncodingGrpbx.ResumeLayout(false);
             this.AncientEncodingGrpbx.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.ExtensionsTab.ResumeLayout(false);
             this.EExtensionsMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1200,21 +1214,21 @@
 
         private System.Windows.Forms.StatusStrip TanjiStrip;
         private System.Windows.Forms.ToolStripStatusLabel SchedulesTxt;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage EncoderDecoderTab;
+        private System.Windows.Forms.TabPage InjectionTab;
         private Controls.TanjiTabControl TanjiTabs;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage5;
-        private Controls.TanjiTabControl tanjiTabControl2;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage ToolboxTab;
+        private System.Windows.Forms.TabPage OptionsTab;
+        private Controls.TanjiTabControl IInjectionTabs;
+        private System.Windows.Forms.TabPage IPrimitiveTab;
+        private System.Windows.Forms.TabPage IConstructerTab;
         private System.Windows.Forms.TextBox IPacketTxt;
         private Controls.TanjiButton PSendToClientBtn;
         private Controls.TanjiButton PSendToServerBtn;
-        private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.TabPage tabPage9;
-        private System.Windows.Forms.TabPage tabPage10;
-        private System.Windows.Forms.GroupBox AdvVL64DecoderGrpbx;
+        private System.Windows.Forms.TabPage ISchedulerTab;
+        private System.Windows.Forms.TabPage ITriggersTab;
+        private System.Windows.Forms.TabPage IFiltersTab;
+        private System.Windows.Forms.GroupBox EDAdvVL64DecoderGrpbx;
         private System.Windows.Forms.Label ChunksFoundLbl;
         private Controls.TanjiButton ExtractValuesBtn;
         private System.Windows.Forms.TextBox VL64ValueTxt;
@@ -1245,12 +1259,8 @@
         private Controls.TanjiButton ModernDecypherShortBtn;
         private Controls.TanjiButton ModernDecypherIntegerBtn;
         private System.Windows.Forms.TextBox ModernIntegerInputTxt;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage ExtensionsTab;
         private System.Windows.Forms.ListView ExtensionViewer;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private Sulakore.Protocol.Controls.HMConstructer ICTanjiConstructer;
         private System.Windows.Forms.Label HeaderLbl;
         private System.Windows.Forms.TextBox ICHeaderTxt;
@@ -1268,14 +1278,14 @@
         private System.Windows.Forms.ContextMenuStrip ICConstructMenu;
         private System.Windows.Forms.ToolStripMenuItem ICSendToClientBtn;
         private System.Windows.Forms.ToolStripMenuItem ICSendToServerBtn;
-        private System.Windows.Forms.ToolStripSeparator ConSplit;
+        private System.Windows.Forms.ToolStripSeparator IConstructSeperator;
         private System.Windows.Forms.ToolStripMenuItem ICCopyPacketBtn;
         private System.Windows.Forms.ToolStripStatusLabel ProtocolTxt;
         private System.Windows.Forms.ContextMenuStrip EExtensionsMenu;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem uninstallToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem installToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EOpenBtn;
+        private System.Windows.Forms.ToolStripMenuItem EUninstallBtn;
+        private System.Windows.Forms.ToolStripSeparator EExtensionsSeperator;
+        private System.Windows.Forms.ToolStripMenuItem EInstallBtn;
         private System.Windows.Forms.Label ISBurstLbl;
         private System.Windows.Forms.NumericUpDown ISBurstTxt;
         private System.Windows.Forms.Label ISIntervalLbl;
@@ -1292,6 +1302,11 @@
         private Controls.TanjiButton ISRemoveBtn;
         private Controls.TanjiButton ISCreateBtn;
         private Sulakore.Protocol.Controls.HMScheduler ISTanjiScheduler;
+        private System.Windows.Forms.ColumnHeader ENameCol;
+        private System.Windows.Forms.ColumnHeader EAuthorCol;
+        private System.Windows.Forms.ColumnHeader EVersionCol;
+        private System.Windows.Forms.ColumnHeader ELocationCol;
+        private System.Windows.Forms.ColumnHeader EStatusCol;
 
     }
 }
