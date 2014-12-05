@@ -67,7 +67,7 @@ namespace Tanji.Applications
                     ViewIncoming = isChecked;
 
                     if (!ViewIncoming)
-                        _displayQueue = new Queue<HMessage>(_displayQueue.Where(x => x.Destination != HDestinations.Client));
+                        _displayQueue = new Queue<HMessage>(_displayQueue.Where(x => x.Destination != HDestination.Client));
 
                     break;
                 }
@@ -77,7 +77,7 @@ namespace Tanji.Applications
                     ViewOutgoing = isChecked;
 
                     if (!ViewOutgoing)
-                        _displayQueue = new Queue<HMessage>(_displayQueue.Where(x => x.Destination != HDestinations.Server));
+                        _displayQueue = new Queue<HMessage>(_displayQueue.Where(x => x.Destination != HDestination.Server));
 
                     break;
                 }
@@ -137,7 +137,7 @@ namespace Tanji.Applications
         }
         public void PushToQueue(HMessage packet)
         {
-            bool toServer = (packet.Destination == HDestinations.Server);
+            bool toServer = (packet.Destination == HDestination.Server);
             if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) return;
 
             _displayQueue.Enqueue(packet);
@@ -163,7 +163,7 @@ namespace Tanji.Applications
                     HMessage packet = _displayQueue.Dequeue();
                     if (packet == null) continue;
 
-                    bool toServer = (packet.Destination == HDestinations.Server);
+                    bool toServer = (packet.Destination == HDestination.Server);
                     if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) continue;
 
                     object[] arguments = packet.IsCorrupted ? new object[] { packet.Length } : new object[] { packet.Header, packet.Length };
