@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="LastHost" Type="System.String" Scope="User">
-      <Value Profile="(Default)">game-us.habbo.com</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastPort" Type="System.String" Scope="User">
-      <Value Profile="(Default)">38101</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastMode" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Email" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

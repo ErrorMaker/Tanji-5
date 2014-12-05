@@ -25,7 +25,7 @@ namespace Tanji.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("game-us.habbo.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastHost {
             get {
                 return ((string)(this["LastHost"]));
@@ -37,7 +37,7 @@ namespace Tanji.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("38101")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastPort {
             get {
                 return ((string)(this["LastPort"]));
@@ -49,7 +49,7 @@ namespace Tanji.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int LastMode {
             get {
                 return ((int)(this["LastMode"]));
