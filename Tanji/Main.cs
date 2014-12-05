@@ -356,7 +356,7 @@ namespace Tanji
             if (e.Effect != DragDropEffects.Copy) return;
 
             string path = ((string[])(e.Data.GetData(DataFormats.FileDrop)))[0];
-            IHExtension extension= _contractor.LoadExtension(path);
+            IHExtension extension = _contractor.LoadExtension(path);
             extension.InitializeExtension();
         }
         private void ExtensionViewer_DragEnter(object sender, DragEventArgs e)
@@ -399,8 +399,7 @@ namespace Tanji
                     }
                 }
             }
-            catch { _packetloggerF.DisplayMessage("Client > Server: Handshake failed!"); HandshakeFinished(); }
-
+            catch { HandshakeFinished(); }
             Game_DataToServer(sender, e);
         }
         private void Handshake_ToClient(object sender, DataToEventArgs e)
@@ -411,10 +410,18 @@ namespace Tanji
                 {
                     case 1:
                     {
-                        try { _fakeClient.DoHandshake(e.Packet.ReadString(), e.Packet.ReadString()); }
-                        catch { if (!AttemptHandshake(e.Packet)) HandshakeFinished(); }
+                        try
+                        {
+                            _fakeClient.DoHandshake(e.Packet.ReadString(), e.Packet.ReadString());
+                        }
+                        catch
+                        {
+                            if (!AttemptHandshake(e.Packet))
+                                HandshakeFinished();
+                        }
 
-                        if (string.IsNullOrWhiteSpace(BannerUrl)) e.Packet = new HMessage(e.Packet.Header, HDestination.Client, HProtocol.Modern, _fakeServer.SignedPrime, _fakeServer.SignedGenerator);
+                        if (string.IsNullOrWhiteSpace(BannerUrl))
+                            e.Packet = new HMessage(e.Packet.Header, HDestination.Client, HProtocol.Modern, _fakeServer.SignedPrime, _fakeServer.SignedGenerator);
                         break;
                     }
                     case 2:
@@ -422,7 +429,7 @@ namespace Tanji
                         if (e.Packet.Length == 2) { _clientStepShift++; break; }
                         _fakeClientKey = _fakeClient.GetSharedKey(e.Packet.ReadString());
 
-                        e.Packet = new HMessage(e.Packet.Header, HDestination.Client, HProtocol.Modern, string.IsNullOrWhiteSpace(BannerUrl) ? _fakeServer.PublicKey : "1", _tanjiConnect.IsOriginal);
+                        e.Packet = new HMessage(e.Packet.Header, HDestination.Client, HProtocol.Modern, (string.IsNullOrWhiteSpace(BannerUrl) ? _fakeServer.PublicKey : "1"), _tanjiConnect.IsOriginal);
                         break;
                     }
                     case 3:
@@ -436,11 +443,10 @@ namespace Tanji
                         }
                         break;
                     }
+                    default: HandshakeFinished(); break;
                 }
             }
-            catch { _packetloggerF.DisplayMessage("Server > Client: Handshake failed!"); }
-
-            if (e.Step >= 4) HandshakeFinished();
+            catch { HandshakeFinished(); }
             Game_DataToClient(sender, e);
         }
 
@@ -486,9 +492,6 @@ namespace Tanji
 
             _tanjiConnect.ShowDialog();
 
-            _fakeClient = new HKeyExchange(RealExponent, RealModulus);
-            _fakeServer = new HKeyExchange(int.Parse(RsaKeys[0][0]), RsaKeys[0][1], RsaKeys[0][2]);
-
             Text = string.Format(TanjiTitleFormat, Game.Host, Game.Port);
             ProtocolTxt.Text = string.Format(ProtocolFormat, Game.Protocol);
             _contractor.Connection = Game;
@@ -502,6 +505,9 @@ namespace Tanji
         private void Reinitiate()
         {
             if (InvokeRequired) { Invoke(_reinitiate); return; }
+
+            _clientStepShift = 0;
+            BannerUrl = string.Empty;
 
             _fakeClient.Flush();
             _fakeServer.Flush();
@@ -598,6 +604,9 @@ namespace Tanji
             if (Main.Game.Protocol == HProtocol.Modern &&
                 (_tanjiConnect.UseCustomClient || _tanjiConnect.TanjiMode == TanjiModes.Automatic))
             {
+                _fakeClient = new HKeyExchange(RealExponent, RealModulus);
+                _fakeServer = new HKeyExchange(int.Parse(RsaKeys[0][0]), RsaKeys[0][1], RsaKeys[0][2]);
+
                 Game.DataToClient += Handshake_ToClient;
                 Game.DataToServer += Handshake_ToServer;
             }
