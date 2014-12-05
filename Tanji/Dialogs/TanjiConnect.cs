@@ -32,18 +32,21 @@ namespace Tanji.Dialogs
         private const string InfoHost = "\"connection.info.host\" : ";
         private const string InfoPort = "\"connection.info.port\" : ";
         private const string FlashClientUrl = "\"flash.client.url\" : ";
+        private const string PatchedClientsDirectory = "Patched Clients";
         private const string HotelViewBannerUrl = "\"hotelview.banner.url\" : ";
+        private const string ResourceNotFound = "Unable to locate resource '{0}.swf' in the Patched Clients folder.";
         private const string ManualMissing = "You must fill in both fields(Host/Port) to continue with the connection process.";
         private const string HostExtractFail = "Unable to retrieve the target's 'connection.info.host' value, a mask is needed to bypass this problem.";
         private const string PortExtractFail = "Unable to retrieve the target's 'connection.info.port' value, a mask is needed to bypass this problem.";
-        private const string ResourceDownloadFailed = "Unable to download resource '{0}.swf', you must manually place the needed modded client build in the 'Patched Clients' folder.";
         #endregion
 
         #region Public Properties
+        public bool IsOriginal { get; private set; }
         public string RealHost { get; private set; }
         public string RealPort { get; private set; }
         public TanjiModes TanjiMode { get; private set; }
         public bool UseCustomClient { get; private set; }
+        public string FlashClientRevision { get; private set; }
         #endregion
 
         #region Constructor(s)
@@ -52,6 +55,9 @@ namespace Tanji.Dialogs
             _main = main;
 
             InitializeComponent();
+
+            if (!Directory.Exists(PatchedClientsDirectory))
+                Directory.CreateDirectory(PatchedClientsDirectory);
 
             Eavesdropper.DisableCache = true;
             Eavesdropper.OnEavesResponse += Eavesdropper_OnEavesResponse;
@@ -77,7 +83,8 @@ namespace Tanji.Dialogs
             {
                 case TanjiModes.Automatic:
                 {
-                    StartAnimation("Altering Response%");
+
+                    StartAnimation("Extracting Host/Port");
 
                     if (!string.IsNullOrWhiteSpace(host)) _maskHost = host.ToLower();
                     if (portConversionSuccess) _maskPort = port;
@@ -258,13 +265,16 @@ namespace Tanji.Dialogs
                 }
                 else
                 {
-                    //_flashClientRevision = ("http://" + response.GetChild(FlashClientUrl, ',').Split('"')[1].Substring(3)).Split('/')[4];
-                    //if (!DownloadClient(_flashClientRevision))
-                    //{
-                    //    ResetTanji();
-                    //    MessageBox.Show(string.Format(ResourceDownloadFailed, _flashClientRevision), "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
+                    FlashClientRevision = ("http://" + response.GetChild(FlashClientUrl, ',').Split('"')[1].Substring(3)).Split('/')[4];
+                    string patchedClientPath = PatchedClientsDirectory + "\\" + FlashClientRevision + ".swf";
+
+                    if (!File.Exists(patchedClientPath))
+                    {
+                        ResetSetup();
+                        Invoke(new MethodInvoker(() => MessageBox.Show(string.Format(ResourceNotFound, FlashClientRevision), Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error)));
+                        return;
+                    }
+                    else Invoke(new MethodInvoker(() => ProcessSwf(patchedClientPath)));
                 }
 
                 if (!UseCustomClient) Eavesdropper.Terminate();
@@ -282,6 +292,7 @@ namespace Tanji.Dialogs
         {
             if (InvokeRequired) { Invoke(_onConnected, sender, e); return; }
 
+            IsOriginal = SKore.IsOriginal(Main.Game.Host, Main.Game.Port);
             _main.HookGameEvents();
 
             _setupFinished = true;
@@ -323,12 +334,19 @@ namespace Tanji.Dialogs
         {
             CustomClientTxt.Text = path;
             Cursor = Cursors.WaitCursor;
-            try { _customClientData = File.ReadAllBytes(path); }
+            try
+            {
+                _customClientData = File.ReadAllBytes(path);
+
+                string possibleDirectory = PatchedClientsDirectory + "//" + Path.GetFileName(path);
+                if (!File.Exists(possibleDirectory)) File.Move(path, possibleDirectory);
+            }
             catch (Exception ex)
             {
                 _customClientData = null;
                 CustomChckbx.Checked = false;
                 CustomClientTxt.Text = string.Empty;
+
                 MessageBox.Show(ex.ToString(), Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             UseCustomClient = (_customClientData != null && _customClientData.Length > 0);

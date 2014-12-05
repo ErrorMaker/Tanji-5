@@ -341,6 +341,7 @@
             this.Name = "TanjiConnect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tanji ~ Connection Setup [Automatic]";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TanjiConnect_FormClosing);
             this.Load += new System.EventHandler(this.TanjiConnect_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.TanjiConnect_DragDrop);
