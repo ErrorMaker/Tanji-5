@@ -123,8 +123,9 @@
             this.EOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EUninstallBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EExtensionsSeperator = new System.Windows.Forms.ToolStripSeparator();
-            this.EInstallBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.EInstallExtensionBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsTab = new System.Windows.Forms.TabPage();
+            this.ChooseExtensionDlg = new System.Windows.Forms.OpenFileDialog();
             this.TanjiStrip.SuspendLayout();
             this.TanjiTabs.SuspendLayout();
             this.InjectionTab.SuspendLayout();
@@ -1127,7 +1128,7 @@
             this.EOpenBtn,
             this.EUninstallBtn,
             this.EExtensionsSeperator,
-            this.EInstallBtn});
+            this.EInstallExtensionBtn});
             this.EExtensionsMenu.Name = "ConstructMenu";
             this.EExtensionsMenu.Size = new System.Drawing.Size(159, 76);
             // 
@@ -1150,11 +1151,12 @@
             this.EExtensionsSeperator.Name = "EExtensionsSeperator";
             this.EExtensionsSeperator.Size = new System.Drawing.Size(155, 6);
             // 
-            // EInstallBtn
+            // EInstallExtensionBtn
             // 
-            this.EInstallBtn.Name = "EInstallBtn";
-            this.EInstallBtn.Size = new System.Drawing.Size(158, 22);
-            this.EInstallBtn.Text = "Install Extension";
+            this.EInstallExtensionBtn.Name = "EInstallExtensionBtn";
+            this.EInstallExtensionBtn.Size = new System.Drawing.Size(158, 22);
+            this.EInstallExtensionBtn.Text = "Install Extension";
+            this.EInstallExtensionBtn.Click += new System.EventHandler(this.EInstallExtensionBtn_Click);
             // 
             // OptionsTab
             // 
@@ -1165,6 +1167,12 @@
             this.OptionsTab.Size = new System.Drawing.Size(471, 313);
             this.OptionsTab.TabIndex = 4;
             this.OptionsTab.Text = "Options";
+            // 
+            // ChooseExtensionDlg
+            // 
+            this.ChooseExtensionDlg.DefaultExt = "dll";
+            this.ChooseExtensionDlg.Filter = "Dynamic Link Library (*.dll)|*.dll";
+            this.ChooseExtensionDlg.Title = "Tanji ~ Choose Extension";
             // 
             // Main
             // 
@@ -1180,7 +1188,6 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tanji  ~ Connected[Host:Port]";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.TanjiStrip.ResumeLayout(false);
@@ -1285,7 +1292,7 @@
         private System.Windows.Forms.ToolStripMenuItem EOpenBtn;
         private System.Windows.Forms.ToolStripMenuItem EUninstallBtn;
         private System.Windows.Forms.ToolStripSeparator EExtensionsSeperator;
-        private System.Windows.Forms.ToolStripMenuItem EInstallBtn;
+        private System.Windows.Forms.ToolStripMenuItem EInstallExtensionBtn;
         private System.Windows.Forms.Label ISBurstLbl;
         private System.Windows.Forms.NumericUpDown ISBurstTxt;
         private System.Windows.Forms.Label ISIntervalLbl;
@@ -1307,6 +1314,7 @@
         private System.Windows.Forms.ColumnHeader EVersionCol;
         private System.Windows.Forms.ColumnHeader ELocationCol;
         private System.Windows.Forms.ColumnHeader EStatusCol;
+        private System.Windows.Forms.OpenFileDialog ChooseExtensionDlg;
 
     }
 }

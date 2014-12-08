@@ -9,8 +9,8 @@ using Tanji.Applications;
 using System.Windows.Forms;
 using Sulakore.Communication;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Sulakore.Protocol.Controls;
+using System.Collections.Generic;
 using Sulakore.Protocol.Encryption;
 using Sulakore.Communication.Bridge;
 
@@ -204,6 +204,7 @@ namespace Tanji
             else ICEditBtn.Enabled = ICRemoveBtn.Enabled = ICMoveUpBtn.Enabled = ICMoveDownBtn.Enabled = false;
         }
         #endregion
+
         #region Scheduler Related Methods
         private void ISStopAllBtn_Click(object sender, EventArgs e)
         {
@@ -356,13 +357,20 @@ namespace Tanji
             if (e.Effect != DragDropEffects.Copy) return;
 
             string path = ((string[])(e.Data.GetData(DataFormats.FileDrop)))[0];
-            IHExtension extension = _contractor.LoadExtension(path);
-            extension.InitializeExtension();
+            AddExtension(path);
         }
         private void ExtensionViewer_DragEnter(object sender, DragEventArgs e)
         {
             if (((string[])(e.Data.GetData(DataFormats.FileDrop)))[0].EndsWith(".dll"))
                 e.Effect = DragDropEffects.Copy;
+        }
+
+        private void EInstallExtensionBtn_Click(object sender, EventArgs e)
+        {
+            ChooseExtensionDlg.FileName = ChooseExtensionDlg.SafeFileName;
+            if (ChooseExtensionDlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+            AddExtension(ChooseExtensionDlg.FileName);
         }
 
         private void ExtensionViewer_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
@@ -527,6 +535,13 @@ namespace Tanji
             Game.DataToServer -= Handshake_ToServer;
             Game.DataToServer += Game_DataToServer;
         }
+        private void AddExtension(string path)
+        {
+            IHExtension extension = _contractor.LoadExtension(path);
+
+            if (extension != null)
+                extension.InitializeExtension();
+        }
 
         private bool AttemptHandshake(HMessage packet)
         {
@@ -581,7 +596,7 @@ namespace Tanji
 
         private HMessage GetSchedulerPacket()
         {
-            var packet = new HMessage(ISPacketTxt.Text, (HDestination)(ISDirectionTxt.SelectedIndex + 1));
+            var packet = new HMessage(ISPacketTxt.Text, (HDestination)(ISDirectionTxt.SelectedIndex));
             if (!packet.IsCorrupted) return packet;
 
             MessageBox.Show(CorrPack, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -621,7 +636,7 @@ namespace Tanji
         public static bool DoSnap(int position, int edge)
         {
             int delta = position - edge;
-            return delta < 0 || delta > 0 && delta <= 100;
+            return delta < 0 || delta > 0 && delta <= 20;
         }
         #endregion
     }
