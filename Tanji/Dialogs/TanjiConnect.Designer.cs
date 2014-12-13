@@ -75,7 +75,7 @@
             // ChooseClientDlg
             // 
             this.ChooseClientDlg.DefaultExt = "swf";
-            this.ChooseClientDlg.Filter = "Shockwave Flash File (*.swf)|*.swf";
+            this.ChooseClientDlg.Filter = "Macromedia Flash file (*.swf)|*.swf";
             this.ChooseClientDlg.Title = "Tanji ~ Choose Custom Client";
             // 
             // StatusTxt

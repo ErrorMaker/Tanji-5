@@ -1,7 +1,9 @@
 ﻿using System;
+using Kroogle;
 using Sulakore;
 using System.IO;
 using System.Text;
+using Kroogle.Tags;
 using Tanji.Services;
 using System.Drawing;
 using Tanji.Properties;
@@ -19,10 +21,11 @@ namespace Tanji.Dialogs
         private int _aTick, _maskPort;
         private byte[] _customClientData;
         private string _aStatus, _maskHost;
-        private bool _setupFinished, _wasSetInManual;
+        private bool _setupFinished, _wasSetInManual, _replaceKeys;
 
         private readonly Color _tanjiC;
         private readonly EventHandler _onConnected;
+        private readonly Action<string> _processSwf;
 
         private const int DefaultPort = 38101;
         private const int EavesdropperPort = 8080;
@@ -42,9 +45,7 @@ namespace Tanji.Dialogs
 
         #region Public Properties
         public bool IsOriginal { get; private set; }
-        public string RealHost { get; private set; }
-        public string RealPort { get; private set; }
-        public TanjiModes TanjiMode { get; private set; }
+        public TanjiMode TanjiMode { get; private set; }
         public bool UseCustomClient { get; private set; }
         public string FlashClientRevision { get; private set; }
         #endregion
@@ -64,6 +65,7 @@ namespace Tanji.Dialogs
 
             _tanjiC = Color.FromArgb(243, 63, 63);
             _onConnected = Game_Connected;
+            _processSwf = ProcessSwf;
         }
         #endregion
 
@@ -81,7 +83,7 @@ namespace Tanji.Dialogs
 
             switch (TanjiMode)
             {
-                case TanjiModes.Automatic:
+                case TanjiMode.Automatic:
                 {
 
                     StartAnimation("Extracting Host/Port");
@@ -92,7 +94,7 @@ namespace Tanji.Dialogs
                     Eavesdropper.Initiate(EavesdropperPort);
                     break;
                 }
-                case TanjiModes.Manual:
+                case TanjiMode.Manual:
                 {
                     if (string.IsNullOrWhiteSpace(host) || !portConversionSuccess)
                     {
@@ -135,14 +137,14 @@ namespace Tanji.Dialogs
 
         private void Manual_Click(object sender, EventArgs e)
         {
-            if (!SetTanjiMode(TanjiModes.Manual)) return;
+            if (!SetTanjiMode(TanjiMode.Manual)) return;
 
             if (CustomChckbx.Checked && !_wasSetInManual)
                 CustomChckbx.Checked = PromptUseCustomClient();
         }
         private void Automatic_Click(object sender, EventArgs e)
         {
-            SetTanjiMode(TanjiModes.Automatic);
+            SetTanjiMode(TanjiMode.Automatic);
         }
 
         private void ATimer_Tick(object sender, EventArgs e)
@@ -159,7 +161,7 @@ namespace Tanji.Dialogs
         }
         private void CustomChckbx_CheckedChanged(object sender, EventArgs e)
         {
-            _wasSetInManual = (TanjiMode == TanjiModes.Manual);
+            _wasSetInManual = (TanjiMode == TanjiMode.Manual);
 
             bool enable = (CustomChckbx.Checked && _wasSetInManual ? PromptUseCustomClient() : CustomChckbx.Checked);
             CustomChckbx.Checked = CustomClientTxt.Enabled = BrowseBtn.Enabled = enable;
@@ -168,7 +170,7 @@ namespace Tanji.Dialogs
         }
         private void GameHostTxt_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (TanjiMode == TanjiModes.Manual)
+            if (TanjiMode == TanjiMode.Manual)
                 GamePortTxt.SelectedIndex = Convert.ToInt32(GameHostTxt.SelectedIndex != 0);
         }
 
@@ -207,16 +209,24 @@ namespace Tanji.Dialogs
         {
             if (UseCustomClient && e.IsSwf && e.ResponeData.Length > 3000000)
             {
-                e.ResponeData = _customClientData;
+                if (!_replaceKeys) e.ResponeData = _customClientData;
+                else
+                {
+                    string clientPath = PatchedClientsDirectory + "\\" + FlashClientRevision + ".swf";
+                    File.WriteAllBytes(clientPath, ReplaceKeys(e.ResponeData));
+                    ProcessSwf(clientPath);
+
+                    e.ResponeData = _customClientData;
+                }
                 Eavesdropper.Terminate();
                 return;
             }
+            if (TanjiMode == TanjiMode.Manual) return;
 
-            if (TanjiMode == TanjiModes.Manual) return;
             string response = Encoding.UTF8.GetString(e.ResponeData);
             if (response.Contains(InfoHost) && response.Contains(InfoPort))
             {
-                bool isOriginal = SKore.IsOriginal(e.Host);
+                IsOriginal = SKore.IsOriginal(e.Host);
 
                 string flashVars = response.GetChild("var flashvars", '}');
                 while (!flashVars.Contains(InfoHost) || !flashVars.Contains(InfoPort))
@@ -248,7 +258,7 @@ namespace Tanji.Dialogs
                 }
                 #endregion
                 #region Extract 'hotelview.banner.url'
-                if (!isOriginal && response.Contains(HotelViewBannerUrl))
+                if (!IsOriginal && response.Contains(HotelViewBannerUrl))
                 {
                     Main.Cookies = e.Cookies;
                     Main.UserAgent = e.UserAgent;
@@ -258,22 +268,17 @@ namespace Tanji.Dialogs
                 }
                 #endregion
 
-                if (!isOriginal)
+                if (!IsOriginal)
                 {
                     response = response.Replace(string.Format("{0}{1},", InfoHost, extractedHost), InfoHost + "\"127.0.0.1\",");
                     e.ResponeData = Encoding.UTF8.GetBytes(response);
                 }
-                else
+                else if (!UseCustomClient)
                 {
                     FlashClientRevision = ("http://" + response.GetChild(FlashClientUrl, ',').Split('"')[1].Substring(3)).Split('/')[4];
                     string patchedClientPath = PatchedClientsDirectory + "\\" + FlashClientRevision + ".swf";
 
-                    if (!File.Exists(patchedClientPath))
-                    {
-                        ResetSetup();
-                        Invoke(new MethodInvoker(() => MessageBox.Show(string.Format(ResourceNotFound, FlashClientRevision), Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error)));
-                        return;
-                    }
+                    if (!File.Exists(patchedClientPath)) UseCustomClient = _replaceKeys = true;
                     else Invoke(new MethodInvoker(() => ProcessSwf(patchedClientPath)));
                 }
 
@@ -282,7 +287,7 @@ namespace Tanji.Dialogs
 
                 Main.Game = new HConnection(_maskHost, _maskPort);
                 Main.Game.Connected += Game_Connected;
-                Main.Game.Connect(isOriginal);
+                Main.Game.Connect(IsOriginal);
             }
         }
         #endregion
@@ -318,6 +323,7 @@ namespace Tanji.Dialogs
             Eavesdropper.Terminate();
 
             _maskPort = 0;
+            _replaceKeys = false;
             _maskHost = string.Empty;
 
             _setupFinished = false;
@@ -332,15 +338,11 @@ namespace Tanji.Dialogs
         }
         private void ProcessSwf(string path)
         {
+            if (InvokeRequired) { Invoke(_processSwf, path); return; }
+
             CustomClientTxt.Text = path;
             Cursor = Cursors.WaitCursor;
-            try
-            {
-                _customClientData = File.ReadAllBytes(path);
-
-                string possibleDirectory = PatchedClientsDirectory + "//" + Path.GetFileName(path);
-                if (!File.Exists(possibleDirectory)) File.Move(path, possibleDirectory);
-            }
+            try { _customClientData = File.ReadAllBytes(path); }
             catch (Exception ex)
             {
                 _customClientData = null;
@@ -362,6 +364,49 @@ namespace Tanji.Dialogs
         {
             ResetSetup();
             MessageBox.Show(message, title, MessageBoxButtons.OK, icon);
+        }
+
+        private byte[] ReplaceKeys(byte[] flashData)
+        {
+            var flash = new ShockwaveFlash(flashData);
+            foreach (IFlashTag flashTag in flash.Tags)
+            {
+                if (flashTag.Header.Tag != FlashTag.DefineBinaryData) continue;
+                var binTag = (DefineBinaryDataTag)flashTag;
+                string binDat = Encoding.UTF8.GetString(binTag.Data);
+
+                if (binDat.Contains("habbo_login_dialog"))
+                {
+                    const string dummyFieldPrefix = "name=\"dummy_field\" caption=\"";
+                    string encodedKeys = binDat.GetChild(dummyFieldPrefix, '"');
+                    ExtractRSAKeys(encodedKeys);
+
+                    string encodedFakeKeys = EncodeRSAKeys(_main.RsaKeys[0][0], _main.RsaKeys[0][1]);
+                    binDat = binDat.Replace(encodedKeys, encodedFakeKeys);
+
+                    binTag.Data = Encoding.UTF8.GetBytes(binDat);
+                    flashData = flash.Compile();
+                    break;
+                }
+            }
+            return flashData;
+        }
+        private void ExtractRSAKeys(string base64MergedKeys)
+        {
+            byte[] data = Convert.FromBase64String(base64MergedKeys);
+            string mergedKeys = Encoding.UTF8.GetString(data);
+
+            int modLength = mergedKeys[0];
+            Main.RealModulus = mergedKeys.Substring(1, modLength);
+            mergedKeys = mergedKeys.Substring(modLength + 1);
+            Main.RealExponent = int.Parse(mergedKeys.Substring(1));
+        }
+        private string EncodeRSAKeys(string exponent, string modulus)
+        {
+            string mergedKeys = string.Format("{0}{1} {2}",
+                (char)modulus.Length, modulus, exponent);
+            byte[] data = Encoding.UTF8.GetBytes(mergedKeys);
+            return Convert.ToBase64String(data);
         }
 
         private void SetAnimation(string status)
@@ -386,7 +431,7 @@ namespace Tanji.Dialogs
         {
             string port = Settings.Default.LastPort;
             string host = Settings.Default.LastHost;
-            TanjiModes mode = (TanjiModes)Settings.Default.LastMode;
+            TanjiMode mode = (TanjiMode)Settings.Default.LastMode;
 
             if (!string.IsNullOrWhiteSpace(port))
             {
@@ -399,7 +444,7 @@ namespace Tanji.Dialogs
                     GamePortTxt.Text = port;
                 }
             }
-            else if (mode == TanjiModes.Manual) GamePortTxt.SelectedIndex = 0;
+            else if (mode == TanjiMode.Manual) GamePortTxt.SelectedIndex = 0;
 
             if (!string.IsNullOrWhiteSpace(host))
             {
@@ -409,7 +454,7 @@ namespace Tanji.Dialogs
                 GameHostTxt.Text = host;
             }
 
-            if (Enum.IsDefined(typeof(TanjiModes), mode))
+            if (Enum.IsDefined(typeof(TanjiMode), mode))
                 SetTanjiMode(mode);
         }
         private void SaveSettings()
@@ -420,21 +465,21 @@ namespace Tanji.Dialogs
 
             Settings.Default.Save();
         }
-        private bool SetTanjiMode(TanjiModes mode)
+        private bool SetTanjiMode(TanjiMode mode)
         {
             if (TanjiMode == mode) return false;
 
             TanjiMode = mode;
             Text = string.Format("Tanji ~ Connection Setup [{0}]", mode);
 
-            ManualH.BackColor = (mode == TanjiModes.Manual ? _tanjiC : Color.Silver);
-            AutomaticH.BackColor = (mode == TanjiModes.Automatic ? _tanjiC : Color.Silver);
+            ManualH.BackColor = (mode == TanjiMode.Manual ? _tanjiC : Color.Silver);
+            AutomaticH.BackColor = (mode == TanjiMode.Automatic ? _tanjiC : Color.Silver);
 
-            string labelSuffix = (mode == TanjiModes.Automatic ? " ( Mask )" : string.Empty);
+            string labelSuffix = (mode == TanjiMode.Automatic ? " ( Mask )" : string.Empty);
             GameHostLbl.Text = "Game Host" + labelSuffix;
             GamePortLbl.Text = "Game Port" + labelSuffix;
 
-            if (TanjiMode == TanjiModes.Automatic)
+            if (TanjiMode == TanjiMode.Automatic)
             {
                 GameHostTxt.SelectedIndex = -1;
                 GamePortTxt.SelectedIndex = -1;
