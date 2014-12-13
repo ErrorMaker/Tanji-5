@@ -1,5 +1,7 @@
-Tanji Copyright (c) 2014 The Old Nut Man
+Tanji, Kroogle, Sulakore Copyright (c) 2014 The Old Nut Man
 (https://github.com/ArachisH/Tanji)
+(https://github.com/ArachisH/Kroogle)
+(https://github.com/ArachisH/Sulakore)
 
 ICSharpCode.SharpZipLib Copyright (C) 2001 Mike Krueger
 #ziplib is a Zip, GZip, Tar and BZip2 library written entirely in C# for the .NET platform.
