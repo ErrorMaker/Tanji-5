@@ -81,7 +81,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\TanjiModes.cs" />
+    <Compile Include="Services\TanjiMode.cs" />
     <EmbeddedResource Include="Applications\Packetlogger.resx">
       <DependentUpon>Packetlogger.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +128,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Kroogle\Kroogle\Kroogle.csproj">
+      <Project>{6a9ecaf9-2cb9-414f-ab9f-185bc2fab1c4}</Project>
+      <Name>Kroogle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Sulakore\Sulakore\Sulakore.csproj">
       <Project>{e2504128-d961-4d6a-9453-9d4cac24627e}</Project>
       <Name>Sulakore</Name>
