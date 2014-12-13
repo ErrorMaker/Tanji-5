@@ -1,6 +1,6 @@
 ﻿namespace Tanji.Services
 {
-    public enum TanjiModes
+    public enum TanjiMode
     {
         Automatic = 0,
         Manual = 1
