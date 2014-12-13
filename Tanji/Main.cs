@@ -51,9 +51,8 @@ namespace Tanji
         public static string UserAgent { get; set; }
         public static HConnection Game { get; set; }
         public static CookieContainer Cookies { get; set; }
-
-        public const int RealExponent = 10001;
-        public const string RealModulus = "e052808c1abef69a1a62c396396b85955e2ff522f5157639fa6a19a98b54e0e4d6e44f44c4c0390fee8ccf642a22b6d46d7228b10e34ae6fffb61a35c11333780af6dd1aaafa7388fa6c65b51e8225c6b57cf5fbac30856e896229512e1f9af034895937b2cb6637eb6edf768c10189df30c10d8a3ec20488a198063599ca6ad";
+        public static int RealExponent { get; set; }
+        public static string RealModulus { get; set; }
         #endregion
 
         #region Constructor(s)
@@ -61,19 +60,16 @@ namespace Tanji
         {
             InitializeComponent();
 
-            #region Populate Fake Keys
+            #region Populate Keys
+            RealExponent = 10001;
+            RealModulus = "e052808c1abef69a1a62c396396b85955e2ff522f5157639fa6a19a98b54e0e4d6e44f44c4c0390fee8ccf642a22b6d46d7228b10e34ae6fffb61a35c11333780af6dd1aaafa7388fa6c65b51e8225c6b57cf5fbac30856e896229512e1f9af034895937b2cb6637eb6edf768c10189df30c10d8a3ec20488a198063599ca6ad";
+
             RsaKeys = new List<string[]>();
             RsaKeys.Add(new[]
             {
                 "3",
                 "86851dd364d5c5cece3c883171cc6ddc5760779b992482bd1e20dd296888df91b33b936a7b93f06d29e8870f703a216257dec7c81de0058fea4cc5116f75e6efc4e9113513e45357dc3fd43d4efab5963ef178b78bd61e81a14c603b24c8bcce0a12230b320045498edc29282ff0603bc7b7dae8fc1b05b52b2f301a9dc783b7",
                 "59ae13e243392e89ded305764bdd9e92e4eafa67bb6dac7e1415e8c645b0950bccd26246fd0d4af37145af5fa026c0ec3a94853013eaae5ff1888360f4f9449ee023762ec195dff3f30ca0b08b8c947e3859877b5d7dced5c8715c58b53740b84e11fbc71349a27c31745fcefeeea57cff291099205e230e0c7c27e8e1c0512b"
-            });
-            RsaKeys.Add(new[]
-            {
-                "10001",
-                "bb48f10b18b0c2ad9c535a6a9265de239f37380a21af09646d266bcf0895d332f7435c14816d8921f5e0f770725891dd42b205d2d67121585056f0c7e570db71ceb3cada4cfbc9ca525f1582e004b9c8ab8b2d8137de5b2e199dac134db042a71983a38f372474be26e6b8e28e2d46e0d24f69ed18477a092d7f80c0136f1011",
-                "75c7ae875af4b6c9b5d919b091f6ec579ca67e60a8c44a74d4cbe7dae0bc5080e9cd7bd80d7954577e290793b8e5887e0c96a660eca962de065056c66fbda4d2fd00c056f643f567debf496031adb657ea66159143e4e608a9518ed8bb843446f71bd8b1930a564faf389919f6bf9bef3cef674b2b6c384e196a29549d92954d"
             });
             RsaKeys.Add(new[]
             {
@@ -517,8 +513,11 @@ namespace Tanji
             _clientStepShift = 0;
             BannerUrl = string.Empty;
 
-            _fakeClient.Flush();
-            _fakeServer.Flush();
+            if (_fakeClient != null)
+                _fakeClient.Flush();
+
+            if (_fakeServer != null)
+                _fakeServer.Flush();
 
             _packetloggerF.Halt();
 
@@ -617,7 +616,7 @@ namespace Tanji
         public void HookGameEvents()
         {
             if (Main.Game.Protocol == HProtocol.Modern &&
-                (_tanjiConnect.UseCustomClient || _tanjiConnect.TanjiMode == TanjiModes.Automatic))
+                (_tanjiConnect.UseCustomClient || _tanjiConnect.TanjiMode == TanjiMode.Automatic))
             {
                 _fakeClient = new HKeyExchange(RealExponent, RealModulus);
                 _fakeServer = new HKeyExchange(int.Parse(RsaKeys[0][0]), RsaKeys[0][1], RsaKeys[0][2]);
