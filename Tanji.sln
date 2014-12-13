@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sulakore", "..\Sulakore\Sul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tanji.Controls", "Tanji.Controls\Tanji.Controls.csproj", "{14430F8C-EF18-4332-B239-3E25FA2755D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kroogle", "..\Kroogle\Kroogle\Kroogle.csproj", "{6A9ECAF9-2CB9-414F-AB9F-185BC2FAB1C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.SharpZLib", "..\..\..\Repositories\SharpZipLib\src\ICSharpCode.SharpZLib.csproj", "{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{14430F8C-EF18-4332-B239-3E25FA2755D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14430F8C-EF18-4332-B239-3E25FA2755D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14430F8C-EF18-4332-B239-3E25FA2755D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A9ECAF9-2CB9-414F-AB9F-185BC2FAB1C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9ECAF9-2CB9-414F-AB9F-185BC2FAB1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9ECAF9-2CB9-414F-AB9F-185BC2FAB1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9ECAF9-2CB9-414F-AB9F-185BC2FAB1C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
