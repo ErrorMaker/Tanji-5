@@ -1,15 +1,15 @@
 ﻿using System;
-using Kroogle;
 using Sulakore;
 using System.IO;
 using System.Text;
-using Kroogle.Tags;
 using Tanji.Services;
 using System.Drawing;
 using Tanji.Properties;
 using System.Windows.Forms;
 using Sulakore.Communication;
 using Sulakore.Communication.Proxy;
+using Sulakore.Editor;
+using Sulakore.Editor.Tags;
 
 namespace Tanji.Dialogs
 {
@@ -17,6 +17,7 @@ namespace Tanji.Dialogs
     {
         #region Private Fields
         private Main _main;
+        private ShockwaveFlash _flash;
 
         private int _aTick, _maskPort;
         private byte[] _customClientData;
@@ -25,7 +26,7 @@ namespace Tanji.Dialogs
 
         private readonly Color _tanjiC;
         private readonly EventHandler _onConnected;
-        private readonly Action<string> _processSwf;
+        private readonly Action<string, byte[]> _processSwf;
 
         private const int DefaultPort = 38101;
         private const int EavesdropperPort = 8080;
@@ -213,9 +214,14 @@ namespace Tanji.Dialogs
                 else
                 {
                     string clientPath = PatchedClientsDirectory + "\\" + FlashClientRevision + ".swf";
-                    File.WriteAllBytes(clientPath, ReplaceKeys(e.ResponeData));
-                    ProcessSwf(clientPath);
 
+                    SetAnimation("Decompiling Client");
+                    byte[] patchedClient = ReplaceKeys(e.ResponeData);
+
+                    StartAnimation("Connecting% | Port: " + Main.Game.Port);
+                    _flash.Save(clientPath, true);
+
+                    ProcessSwf(clientPath, patchedClient);
                     e.ResponeData = _customClientData;
                 }
                 Eavesdropper.Terminate();
@@ -336,13 +342,13 @@ namespace Tanji.Dialogs
                 ProcessBtn.Click += Connect_Click;
             }
         }
-        private void ProcessSwf(string path)
+        private void ProcessSwf(string path, byte[] data = null)
         {
-            if (InvokeRequired) { Invoke(_processSwf, path); return; }
+            if (InvokeRequired) { Invoke(_processSwf, path, data); return; }
 
             CustomClientTxt.Text = path;
             Cursor = Cursors.WaitCursor;
-            try { _customClientData = File.ReadAllBytes(path); }
+            try { _customClientData = data ?? File.ReadAllBytes(path); }
             catch (Exception ex)
             {
                 _customClientData = null;
@@ -368,10 +374,12 @@ namespace Tanji.Dialogs
 
         private byte[] ReplaceKeys(byte[] flashData)
         {
-            var flash = new ShockwaveFlash(flashData);
-            foreach (IFlashTag flashTag in flash.Tags)
+            _flash = new ShockwaveFlash(flashData);
+
+            SetAnimation("Replacing Keys");
+            foreach (IFlashTag flashTag in _flash.Tags)
             {
-                if (flashTag.Header.Tag != FlashTag.DefineBinaryData) continue;
+                if (flashTag.Header.Tag != FlashTagType.DefineBinaryData) continue;
                 var binTag = (DefineBinaryDataTag)flashTag;
                 string binDat = Encoding.UTF8.GetString(binTag.Data);
 
@@ -385,7 +393,9 @@ namespace Tanji.Dialogs
                     binDat = binDat.Replace(encodedKeys, encodedFakeKeys);
 
                     binTag.Data = Encoding.UTF8.GetBytes(binDat);
-                    flashData = flash.Compile();
+
+                    SetAnimation("Compiling Client");
+                    flashData = _flash.Compile();
                     break;
                 }
             }
