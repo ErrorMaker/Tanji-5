@@ -47,13 +47,13 @@
             this.CustomClientTxt = new System.Windows.Forms.TextBox();
             this.CustomChckbx = new System.Windows.Forms.CheckBox();
             this.FiddlerCoreGrpbx = new System.Windows.Forms.GroupBox();
-            this.BrowseBtn = new Tanji.Controls.TanjiButton();
             this.ModulusTxt = new System.Windows.Forms.TextBox();
             this.ModulusGrpbx = new System.Windows.Forms.GroupBox();
             this.GameHostTxt = new System.Windows.Forms.ComboBox();
             this.ManualLbl = new System.Windows.Forms.Label();
             this.GamePortTxt = new System.Windows.Forms.ComboBox();
             this.ProcessBtn = new Tanji.Controls.TanjiButton();
+            this.BrowseBtn = new Tanji.Controls.TanjiButton();
             this.ExponentGrpbx.SuspendLayout();
             this.FiddlerCoreGrpbx.SuspendLayout();
             this.ModulusGrpbx.SuspendLayout();
@@ -214,20 +214,6 @@
             this.FiddlerCoreGrpbx.TabStop = false;
             this.FiddlerCoreGrpbx.Text = "Eavesdropper - Custom Client";
             // 
-            // BrowseBtn
-            // 
-            this.BrowseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseBtn.BackColor = System.Drawing.Color.Transparent;
-            this.BrowseBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.BrowseBtn.Enabled = false;
-            this.BrowseBtn.Location = new System.Drawing.Point(241, 19);
-            this.BrowseBtn.Name = "BrowseBtn";
-            this.BrowseBtn.Size = new System.Drawing.Size(59, 20);
-            this.BrowseBtn.TabIndex = 2;
-            this.BrowseBtn.TabStop = false;
-            this.BrowseBtn.Text = "Browse";
-            this.BrowseBtn.Click += new System.EventHandler(this.BrowseBtn_Click);
-            // 
             // ModulusTxt
             // 
             this.ModulusTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -309,6 +295,20 @@
             this.ProcessBtn.TabStop = false;
             this.ProcessBtn.Text = "Connect";
             this.ProcessBtn.Click += new System.EventHandler(this.Connect_Click);
+            // 
+            // BrowseBtn
+            // 
+            this.BrowseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BrowseBtn.BackColor = System.Drawing.Color.Transparent;
+            this.BrowseBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.BrowseBtn.Enabled = false;
+            this.BrowseBtn.Location = new System.Drawing.Point(241, 19);
+            this.BrowseBtn.Name = "BrowseBtn";
+            this.BrowseBtn.Size = new System.Drawing.Size(59, 20);
+            this.BrowseBtn.TabIndex = 2;
+            this.BrowseBtn.TabStop = false;
+            this.BrowseBtn.Text = "Browse";
+            this.BrowseBtn.Click += new System.EventHandler(this.BrowseBtn_Click);
             // 
             // TanjiConnect
             // 

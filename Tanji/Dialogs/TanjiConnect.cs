@@ -1,15 +1,18 @@
 ﻿using System;
-using Sulakore;
 using System.IO;
 using System.Text;
-using Tanji.Services;
 using System.Drawing;
-using Tanji.Properties;
 using System.Windows.Forms;
-using Sulakore.Communication;
-using Sulakore.Communication.Proxy;
+using System.Threading.Tasks;
+
+using Tanji.Services;
+using Tanji.Properties;
+
+using Sulakore;
 using Sulakore.Editor;
 using Sulakore.Editor.Tags;
+using Sulakore.Communication;
+using Sulakore.Communication.Proxy;
 
 namespace Tanji.Dialogs
 {
@@ -20,13 +23,14 @@ namespace Tanji.Dialogs
         private ShockwaveFlash _flash;
 
         private int _aTick, _maskPort;
-        private byte[] _customClientData;
         private string _aStatus, _maskHost;
         private bool _setupFinished, _wasSetInManual, _replaceKeys;
 
-        private readonly Color _tanjiC;
         private readonly EventHandler _onConnected;
-        private readonly Action<string, byte[]> _processSwf;
+        private readonly Action<string> _processSwf;
+
+        private static readonly Encoding _encoding;
+        private static readonly Color _tanjiGlowColor;
 
         private const int DefaultPort = 38101;
         private const int EavesdropperPort = 8080;
@@ -52,6 +56,11 @@ namespace Tanji.Dialogs
         #endregion
 
         #region Constructor(s)
+        static TanjiConnect()
+        {
+            _encoding = new UTF8Encoding();
+            _tanjiGlowColor = Color.FromArgb(243, 63, 63);
+        }
         public TanjiConnect(Main main)
         {
             _main = main;
@@ -64,7 +73,6 @@ namespace Tanji.Dialogs
             Eavesdropper.DisableCache = true;
             Eavesdropper.OnEavesResponse += Eavesdropper_OnEavesResponse;
 
-            _tanjiC = Color.FromArgb(243, 63, 63);
             _onConnected = Game_Connected;
             _processSwf = ProcessSwf;
         }
@@ -122,18 +130,12 @@ namespace Tanji.Dialogs
         }
         private void Cancel_Click(object sender, EventArgs e)
         {
-            StopAnimation("Standing by...");
-            Eavesdropper.Terminate();
-
+            ResetSetup();
             if (Main.Game != null)
             {
                 Main.Game.Dispose();
                 Main.Game = null;
             }
-
-            ProcessBtn.Text = "Connect";
-            ProcessBtn.Click -= Cancel_Click;
-            ProcessBtn.Click += Connect_Click;
         }
 
         private void Manual_Click(object sender, EventArgs e)
@@ -167,7 +169,7 @@ namespace Tanji.Dialogs
             bool enable = (CustomChckbx.Checked && _wasSetInManual ? PromptUseCustomClient() : CustomChckbx.Checked);
             CustomChckbx.Checked = CustomClientTxt.Enabled = BrowseBtn.Enabled = enable;
 
-            UseCustomClient = (_customClientData != null && _customClientData.Length > 0 && enable);
+            UseCustomClient = (_flash != null && !_flash.IsCompressed && enable);
         }
         private void GameHostTxt_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -178,10 +180,9 @@ namespace Tanji.Dialogs
         private void TanjiConnect_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Effect != DragDropEffects.Copy) return;
-            CustomChckbx.Checked = true;
 
-            if (CustomChckbx.Checked)
-                ProcessSwf(((string[])(e.Data.GetData(DataFormats.FileDrop)))[0]);
+            CustomChckbx.Checked = true;
+            ProcessSwf(((string[])(e.Data.GetData(DataFormats.FileDrop)))[0]);
         }
         private void TanjiConnect_DragEnter(object sender, DragEventArgs e)
         {
@@ -210,26 +211,22 @@ namespace Tanji.Dialogs
         {
             if (UseCustomClient && e.IsSwf && e.ResponeData.Length > 3000000)
             {
-                if (!_replaceKeys) e.ResponeData = _customClientData;
+                if (!_replaceKeys) e.ResponeData = _flash.ToBytes();
                 else
                 {
+                    _flash = new ShockwaveFlash(e.ResponeData);
+                    ReplaceKeys(_flash);
+                    e.ResponeData = _flash.ToBytes();
+
                     string clientPath = PatchedClientsDirectory + "\\" + FlashClientRevision + ".swf";
-
-                    SetAnimation("Decompiling Client");
-                    byte[] patchedClient = ReplaceKeys(e.ResponeData);
-
-                    StartAnimation("Connecting% | Port: " + Main.Game.Port);
-                    _flash.Save(clientPath, true);
-
-                    ProcessSwf(clientPath, patchedClient);
-                    e.ResponeData = _customClientData;
+                    Task.Factory.StartNew(() => _flash.Save(clientPath, true));
                 }
                 Eavesdropper.Terminate();
                 return;
             }
-            if (TanjiMode == TanjiMode.Manual) return;
+            else if (TanjiMode == TanjiMode.Manual) return;
 
-            string response = Encoding.UTF8.GetString(e.ResponeData);
+            string response = _encoding.GetString(e.ResponeData);
             if (response.Contains(InfoHost) && response.Contains(InfoPort))
             {
                 IsOriginal = SKore.IsOriginal(e.Host);
@@ -277,7 +274,7 @@ namespace Tanji.Dialogs
                 if (!IsOriginal)
                 {
                     response = response.Replace(string.Format("{0}{1},", InfoHost, extractedHost), InfoHost + "\"127.0.0.1\",");
-                    e.ResponeData = Encoding.UTF8.GetBytes(response);
+                    e.ResponeData = _encoding.GetBytes(response);
                 }
                 else if (!UseCustomClient)
                 {
@@ -330,9 +327,8 @@ namespace Tanji.Dialogs
 
             _maskPort = 0;
             _replaceKeys = false;
-            _maskHost = string.Empty;
-
             _setupFinished = false;
+            _maskHost = string.Empty;
 
             StopAnimation("Standing By...");
             if (ProcessBtn.Text == "Cancel")
@@ -342,22 +338,23 @@ namespace Tanji.Dialogs
                 ProcessBtn.Click += Connect_Click;
             }
         }
-        private void ProcessSwf(string path, byte[] data = null)
+        private void ProcessSwf(string path)
         {
-            if (InvokeRequired) { Invoke(_processSwf, path, data); return; }
+            if (InvokeRequired) { Invoke(_processSwf, path); return; }
 
             CustomClientTxt.Text = path;
             Cursor = Cursors.WaitCursor;
-            try { _customClientData = data ?? File.ReadAllBytes(path); }
-            catch (Exception ex)
+            try
             {
-                _customClientData = null;
+                _flash = new ShockwaveFlash(path);
+            }
+            catch
+            {
+                _flash = null;
                 CustomChckbx.Checked = false;
                 CustomClientTxt.Text = string.Empty;
-
-                MessageBox.Show(ex.ToString(), Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            UseCustomClient = (_customClientData != null && _customClientData.Length > 0);
+            UseCustomClient = (_flash != null && !_flash.IsCompressed);
             Cursor = Cursors.Default;
         }
         private bool PromptUseCustomClient()
@@ -372,17 +369,14 @@ namespace Tanji.Dialogs
             MessageBox.Show(message, title, MessageBoxButtons.OK, icon);
         }
 
-        private byte[] ReplaceKeys(byte[] flashData)
+        private void ReplaceKeys(ShockwaveFlash flash)
         {
-            _flash = new ShockwaveFlash(flashData);
-
-            SetAnimation("Replacing Keys");
             foreach (IFlashTag flashTag in _flash.Tags)
             {
                 if (flashTag.Header.Tag != FlashTagType.DefineBinaryData) continue;
-                var binTag = (DefineBinaryDataTag)flashTag;
-                string binDat = Encoding.UTF8.GetString(binTag.Data);
 
+                var binTag = (DefineBinaryDataTag)flashTag;
+                string binDat = _encoding.GetString(binTag.Data);
                 if (binDat.Contains("habbo_login_dialog"))
                 {
                     const string dummyFieldPrefix = "name=\"dummy_field\" caption=\"";
@@ -392,30 +386,29 @@ namespace Tanji.Dialogs
                     string encodedFakeKeys = EncodeRSAKeys(_main.RsaKeys[0][0], _main.RsaKeys[0][1]);
                     binDat = binDat.Replace(encodedKeys, encodedFakeKeys);
 
-                    binTag.Data = Encoding.UTF8.GetBytes(binDat);
-
-                    SetAnimation("Compiling Client");
-                    flashData = _flash.Compile();
+                    binTag.Data = _encoding.GetBytes(binDat);
+                    flash.Compile();
                     break;
                 }
             }
-            return flashData;
         }
         private void ExtractRSAKeys(string base64MergedKeys)
         {
             byte[] data = Convert.FromBase64String(base64MergedKeys);
-            string mergedKeys = Encoding.UTF8.GetString(data);
+            string mergedKeys = _encoding.GetString(data);
 
             int modLength = mergedKeys[0];
             Main.RealModulus = mergedKeys.Substring(1, modLength);
-            mergedKeys = mergedKeys.Substring(modLength + 1);
-            Main.RealExponent = int.Parse(mergedKeys.Substring(1));
+
+            mergedKeys = mergedKeys.Substring(modLength);
+            Main.RealExponent = int.Parse(mergedKeys.Substring(2));
         }
         private string EncodeRSAKeys(string exponent, string modulus)
         {
             string mergedKeys = string.Format("{0}{1} {2}",
                 (char)modulus.Length, modulus, exponent);
-            byte[] data = Encoding.UTF8.GetBytes(mergedKeys);
+
+            byte[] data = _encoding.GetBytes(mergedKeys);
             return Convert.ToBase64String(data);
         }
 
@@ -441,7 +434,7 @@ namespace Tanji.Dialogs
         {
             string port = Settings.Default.LastPort;
             string host = Settings.Default.LastHost;
-            TanjiMode mode = (TanjiMode)Settings.Default.LastMode;
+            var mode = (TanjiMode)Settings.Default.LastMode;
 
             if (!string.IsNullOrWhiteSpace(port))
             {
@@ -482,8 +475,8 @@ namespace Tanji.Dialogs
             TanjiMode = mode;
             Text = string.Format("Tanji ~ Connection Setup [{0}]", mode);
 
-            ManualH.BackColor = (mode == TanjiMode.Manual ? _tanjiC : Color.Silver);
-            AutomaticH.BackColor = (mode == TanjiMode.Automatic ? _tanjiC : Color.Silver);
+            ManualH.BackColor = (mode == TanjiMode.Manual ? _tanjiGlowColor : Color.Silver);
+            AutomaticH.BackColor = (mode == TanjiMode.Automatic ? _tanjiGlowColor : Color.Silver);
 
             string labelSuffix = (mode == TanjiMode.Automatic ? " ( Mask )" : string.Empty);
             GameHostLbl.Text = "Game Host" + labelSuffix;
