@@ -75,22 +75,25 @@ namespace Tanji.Controls
         #region Protected Methods (Overrides)
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.Clear(Color.FromArgb(243, 63, 63));
-            e.Graphics.DrawBorders(Color.FromArgb(50, Color.Black), ClientRectangle);
-
-            if (_mState == Draw.MStateDown)
+            if (Enabled)
             {
-                const int height = 10;
-                e.Graphics.FillGradient(Color.FromArgb(25, Color.Black), Color.Transparent, new Rectangle(0, 0, Width, height));
-                e.Graphics.FillGradient(Color.FromArgb(25, Color.Black), Color.Transparent, new Rectangle(0, Height - height, Width, height), 270);
+                e.Graphics.Clear(Color.FromArgb(243, 63, 63));
+                e.Graphics.DrawBorders(Color.FromArgb(50, Color.Black), ClientRectangle);
+                if (_mState == Draw.MStateDown)
+                {
+                    const int height = 10;
+                    e.Graphics.FillGradient(Color.FromArgb(25, Color.Black), Color.Transparent, new Rectangle(0, 0, Width, height));
+                    e.Graphics.FillGradient(Color.FromArgb(25, Color.Black), Color.Transparent, new Rectangle(0, Height - height, Width, height), 270);
+                }
+                e.Graphics.DrawString(Text, Font, Color.FromArgb(_mState != Draw.MStateDown ? 100 : 150, Color.Black), new Rectangle(1, 1, Width, Height + 1), StringAlignment.Center);
+                e.Graphics.DrawString(Text, Font, Color.White, new Rectangle(0, 0, Width, Height + 1), StringAlignment.Center);
             }
-
-            e.Graphics.DrawString(Text, Font, Color.FromArgb(_mState != Draw.MStateDown ? 100 : 150, Color.Black), new Rectangle(1, 1, Width, Height + 1), StringAlignment.Center);
-            e.Graphics.DrawString(Text, Font, Color.White, new Rectangle(0, 0, Width, Height + 1), StringAlignment.Center);
-
-            if (!Enabled)
-                e.Graphics.FillRectangle(Color.FromArgb(50, Color.Black), ClientRectangle);
-
+            else
+            {
+                e.Graphics.Clear(SystemColors.Control);
+                e.Graphics.DrawBorders(Color.FromArgb(50, Color.Black), ClientRectangle);
+                e.Graphics.DrawString(Text, Font, Color.FromArgb(150, Color.Black), new Rectangle(0, 0, Width, Height + 1), StringAlignment.Center);
+            }
             base.OnPaint(e);
         }
         protected override void OnClick(EventArgs e)
