@@ -113,12 +113,7 @@
             this.AncientIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.ToolboxTab = new System.Windows.Forms.TabPage();
             this.ExtensionsTab = new System.Windows.Forms.TabPage();
-            this.ExtensionViewer = new System.Windows.Forms.ListView();
-            this.ENameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.EAuthorCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.EVersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ELocationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.EStatusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ETanjiExtensionViewer = new Sulakore.Communication.Bridge.HExtensionViewer();
             this.EExtensionsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EUninstallBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -1064,7 +1059,7 @@
             // ExtensionsTab
             // 
             this.ExtensionsTab.BackColor = System.Drawing.Color.White;
-            this.ExtensionsTab.Controls.Add(this.ExtensionViewer);
+            this.ExtensionsTab.Controls.Add(this.ETanjiExtensionViewer);
             this.ExtensionsTab.Location = new System.Drawing.Point(4, 28);
             this.ExtensionsTab.Name = "ExtensionsTab";
             this.ExtensionsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1072,55 +1067,26 @@
             this.ExtensionsTab.TabIndex = 5;
             this.ExtensionsTab.Text = "Extensions";
             // 
-            // ExtensionViewer
+            // ETanjiExtensionViewer
             // 
-            this.ExtensionViewer.AllowDrop = true;
-            this.ExtensionViewer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ENameCol,
-            this.EAuthorCol,
-            this.EVersionCol,
-            this.ELocationCol,
-            this.EStatusCol});
-            this.ExtensionViewer.ContextMenuStrip = this.EExtensionsMenu;
-            this.ExtensionViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ExtensionViewer.FullRowSelect = true;
-            this.ExtensionViewer.GridLines = true;
-            this.ExtensionViewer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ExtensionViewer.Location = new System.Drawing.Point(3, 3);
-            this.ExtensionViewer.MultiSelect = false;
-            this.ExtensionViewer.Name = "ExtensionViewer";
-            this.ExtensionViewer.ShowItemToolTips = true;
-            this.ExtensionViewer.Size = new System.Drawing.Size(465, 307);
-            this.ExtensionViewer.TabIndex = 0;
-            this.ExtensionViewer.UseCompatibleStateImageBehavior = false;
-            this.ExtensionViewer.View = System.Windows.Forms.View.Details;
-            this.ExtensionViewer.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ExtensionViewer_ColumnWidthChanging);
-            this.ExtensionViewer.DragDrop += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragDrop);
-            this.ExtensionViewer.DragEnter += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragEnter);
-            // 
-            // ENameCol
-            // 
-            this.ENameCol.Text = "Name";
-            this.ENameCol.Width = 90;
-            // 
-            // EAuthorCol
-            // 
-            this.EAuthorCol.Text = "Author";
-            this.EAuthorCol.Width = 70;
-            // 
-            // EVersionCol
-            // 
-            this.EVersionCol.Text = "Version";
-            this.EVersionCol.Width = 50;
-            // 
-            // ELocationCol
-            // 
-            this.ELocationCol.Text = "Location";
-            this.ELocationCol.Width = 173;
-            // 
-            // EStatusCol
-            // 
-            this.EStatusCol.Text = "Status";
+            this.ETanjiExtensionViewer.ContextMenuStrip = this.EExtensionsMenu;
+            this.ETanjiExtensionViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ETanjiExtensionViewer.FullRowSelect = true;
+            this.ETanjiExtensionViewer.GridLines = true;
+            this.ETanjiExtensionViewer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ETanjiExtensionViewer.Location = new System.Drawing.Point(3, 3);
+            this.ETanjiExtensionViewer.LockColumns = true;
+            this.ETanjiExtensionViewer.MultiSelect = false;
+            this.ETanjiExtensionViewer.Name = "ETanjiExtensionViewer";
+            this.ETanjiExtensionViewer.ShowItemToolTips = true;
+            this.ETanjiExtensionViewer.Size = new System.Drawing.Size(465, 307);
+            this.ETanjiExtensionViewer.TabIndex = 0;
+            this.ETanjiExtensionViewer.UseCompatibleStateImageBehavior = false;
+            this.ETanjiExtensionViewer.View = System.Windows.Forms.View.Details;
+            this.ETanjiExtensionViewer.ItemActivate += new System.EventHandler(this.ETanjiExtensionViewer_ItemActivate);
+            this.ETanjiExtensionViewer.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ETanjiExtensionViewer_ItemSelectionChanged);
+            this.ETanjiExtensionViewer.DragDrop += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragDrop);
+            this.ETanjiExtensionViewer.DragEnter += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragEnter);
             // 
             // EExtensionsMenu
             // 
@@ -1130,7 +1096,7 @@
             this.EExtensionsSeperator,
             this.EInstallExtensionBtn});
             this.EExtensionsMenu.Name = "ConstructMenu";
-            this.EExtensionsMenu.Size = new System.Drawing.Size(159, 76);
+            this.EExtensionsMenu.Size = new System.Drawing.Size(159, 98);
             // 
             // EOpenBtn
             // 
@@ -1138,6 +1104,7 @@
             this.EOpenBtn.Name = "EOpenBtn";
             this.EOpenBtn.Size = new System.Drawing.Size(158, 22);
             this.EOpenBtn.Text = "Open";
+            this.EOpenBtn.Click += new System.EventHandler(this.EOpenBtn_Click);
             // 
             // EUninstallBtn
             // 
@@ -1145,6 +1112,7 @@
             this.EUninstallBtn.Name = "EUninstallBtn";
             this.EUninstallBtn.Size = new System.Drawing.Size(158, 22);
             this.EUninstallBtn.Text = "Uninstall";
+            this.EUninstallBtn.Click += new System.EventHandler(this.EUninstallBtn_Click);
             // 
             // EExtensionsSeperator
             // 
@@ -1267,7 +1235,6 @@
         private Controls.TanjiButton ModernDecypherIntegerBtn;
         private System.Windows.Forms.TextBox ModernIntegerInputTxt;
         private System.Windows.Forms.TabPage ExtensionsTab;
-        private System.Windows.Forms.ListView ExtensionViewer;
         private Sulakore.Protocol.Controls.HMConstructer ICTanjiConstructer;
         private System.Windows.Forms.Label HeaderLbl;
         private System.Windows.Forms.TextBox ICHeaderTxt;
@@ -1309,12 +1276,8 @@
         private Controls.TanjiButton ISRemoveBtn;
         private Controls.TanjiButton ISCreateBtn;
         private Sulakore.Protocol.Controls.HMScheduler ISTanjiScheduler;
-        private System.Windows.Forms.ColumnHeader ENameCol;
-        private System.Windows.Forms.ColumnHeader EAuthorCol;
-        private System.Windows.Forms.ColumnHeader EVersionCol;
-        private System.Windows.Forms.ColumnHeader ELocationCol;
-        private System.Windows.Forms.ColumnHeader EStatusCol;
         private System.Windows.Forms.OpenFileDialog ChooseExtensionDlg;
+        private Sulakore.Communication.Bridge.HExtensionViewer ETanjiExtensionViewer;
 
     }
 }

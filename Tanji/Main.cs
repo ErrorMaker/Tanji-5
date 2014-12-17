@@ -1,16 +1,18 @@
 ﻿using System;
-using Sulakore;
 using System.Net;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
 using Tanji.Dialogs;
 using Tanji.Services;
-using System.Drawing;
-using Sulakore.Protocol;
 using Tanji.Applications;
-using System.Windows.Forms;
+
+using Sulakore;
+using Sulakore.Protocol;
 using Sulakore.Communication;
-using System.Threading.Tasks;
 using Sulakore.Protocol.Controls;
-using System.Collections.Generic;
 using Sulakore.Protocol.Encryption;
 using Sulakore.Communication.Bridge;
 
@@ -28,6 +30,7 @@ namespace Tanji
         private readonly TanjiConnect _tanjiConnect;
         private readonly Packetlogger _packetloggerF;
         private readonly Action _initiate, _reinitiate;
+        private readonly Dictionary<ListViewItem, IHExtension> _extensionItems;
 
         private const string ProtocolFormat = "Protocol: {0}";
         private const string ScheduleFormat = "Schedules Active: {0}/{1}";
@@ -82,6 +85,9 @@ namespace Tanji
             _contractor = new HContractor();
             _packetloggerF = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
+            _extensionItems = new Dictionary<ListViewItem, IHExtension>();
+
+            _contractor.ExtensionUnloaded += ExtensionUnloaded;
 
             _initiate = Initiate;
             _reinitiate = Reinitiate;
@@ -348,6 +354,28 @@ namespace Tanji
         #endregion
 
         #region Extensions Related Methods
+        private void ETanjiExtensionViewer_ItemActivate(object sender, EventArgs e)
+        {
+            ETanjiExtensionViewer.InitializeSelected();
+        }
+        private void ExtensionUnloaded(object sender, ExtensionUnloadedEventArgs e)
+        {
+            ETanjiExtensionViewer.RemoveExtension(e.Extension);
+
+            if (_contractor.ExtensionsLoaded < 1)
+                EOpenBtn.Enabled = EUninstallBtn.Enabled = false;
+        }
+
+        private void EOpenBtn_Click(object sender, EventArgs e)
+        {
+            ETanjiExtensionViewer.GetSelectedExtension().InitializeExtension();
+        }
+        private void EUninstallBtn_Click(object sender, EventArgs e)
+        {
+            IHExtension extension = ETanjiExtensionViewer.GetSelectedExtension();
+            _contractor.InitiateUnload(extension);
+        }
+
         private void ExtensionViewer_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Effect != DragDropEffects.Copy) return;
@@ -368,11 +396,9 @@ namespace Tanji
 
             AddExtension(ChooseExtensionDlg.FileName);
         }
-
-        private void ExtensionViewer_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        private void ETanjiExtensionViewer_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            e.Cancel = true;
-            e.NewWidth = ExtensionViewer.Columns[e.ColumnIndex].Width;
+            EOpenBtn.Enabled = EUninstallBtn.Enabled = e.IsSelected;
         }
         #endregion
         #endregion
@@ -539,7 +565,7 @@ namespace Tanji
             IHExtension extension = _contractor.LoadExtension(path);
 
             if (extension != null)
-                extension.InitializeExtension();
+                ETanjiExtensionViewer.AddExtension(extension);
         }
 
         private bool AttemptHandshake(HMessage packet)
