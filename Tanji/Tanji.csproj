@@ -67,11 +67,17 @@
     <Compile Include="Dialogs\TanjiConnect.Designer.cs">
       <DependentUpon>TanjiConnect.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\TanjiConstructEdit.cs">
+    <Compile Include="Dialogs\TanjiConstructerEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\TanjiConstructEdit.Designer.cs">
-      <DependentUpon>TanjiConstructEdit.cs</DependentUpon>
+    <Compile Include="Dialogs\TanjiConstructerEdit.Designer.cs">
+      <DependentUpon>TanjiConstructerEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TanjiSchedulerEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TanjiSchedulerEdit.Designer.cs">
+      <DependentUpon>TanjiSchedulerEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -88,8 +94,11 @@
     <EmbeddedResource Include="Dialogs\TanjiConnect.resx">
       <DependentUpon>TanjiConnect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\TanjiConstructEdit.resx">
-      <DependentUpon>TanjiConstructEdit.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\TanjiConstructerEdit.resx">
+      <DependentUpon>TanjiConstructerEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TanjiSchedulerEdit.resx">
+      <DependentUpon>TanjiSchedulerEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

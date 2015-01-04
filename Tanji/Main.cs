@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,12 +10,11 @@ using Tanji.Dialogs;
 using Tanji.Services;
 using Tanji.Applications;
 
-using Sulakore;
 using Sulakore.Protocol;
+using Sulakore.Extensions;
 using Sulakore.Communication;
 using Sulakore.Protocol.Controls;
 using Sulakore.Protocol.Encryption;
-using Sulakore.Communication.Bridge;
 
 namespace Tanji
 {
@@ -23,14 +23,13 @@ namespace Tanji
         #region Private Fields
         private bool _debugging;
         private int _clientStepShift;
+        private Contractor _contractor;
         private byte[] _fakeClientKey, _fakeServerKey;
         private HKeyExchange _fakeClient, _fakeServer;
 
-        private readonly HContractor _contractor;
         private readonly TanjiConnect _tanjiConnect;
         private readonly Packetlogger _packetloggerF;
         private readonly Action _initiate, _reinitiate;
-        private readonly Dictionary<ListViewItem, IHExtension> _extensionItems;
 
         private const string ProtocolFormat = "Protocol: {0}";
         private const string ScheduleFormat = "Schedules Active: {0}/{1}";
@@ -53,7 +52,7 @@ namespace Tanji
         public static string BannerUrl { get; set; }
         public static string UserAgent { get; set; }
         public static HConnection Game { get; set; }
-        public static CookieContainer Cookies { get; set; }
+        public static string Cookies { get; set; }
         public static int RealExponent { get; set; }
         public static string RealModulus { get; set; }
         #endregion
@@ -82,12 +81,8 @@ namespace Tanji
             });
             #endregion
 
-            _contractor = new HContractor();
             _packetloggerF = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
-            _extensionItems = new Dictionary<ListViewItem, IHExtension>();
-
-            _contractor.ExtensionUnloaded += ExtensionUnloaded;
 
             _initiate = Initiate;
             _reinitiate = Reinitiate;
@@ -108,7 +103,7 @@ namespace Tanji
             if (!_debugging)
             {
                 e.Cancel = true;
-                Task.Factory.StartNew(Game.Disconnect, TaskCreationOptions.LongRunning);
+                Task.Factory.StartNew(Game.Disconnect);
             }
         }
 
@@ -127,17 +122,35 @@ namespace Tanji
         private void ICAppendIntegerBtn_Click(object sender, EventArgs e)
         {
             int value;
+            int count = (int)ICCountTxt.Value;
             if (int.TryParse(ICValueTxt.Text, out value) || string.IsNullOrWhiteSpace(ICValueTxt.Text))
-                ICTanjiConstructer.AppendChunk(value);
+            {
+                ICTanjiConstructer.BeginUpdate();
+                for (int i = 0; i < count; i++)
+                    ICTanjiConstructer.AppendChunk(value);
+                ICTanjiConstructer.EndUpdate();
+            }
             else MessageBox.Show(NotInt32, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void ICAppendStringBtn_Click(object sender, EventArgs e)
         {
-            ICTanjiConstructer.AppendChunk(ICValueTxt.Text);
+            string value = ICValueTxt.Text;
+            int count = (int)ICCountTxt.Value;
+
+            ICTanjiConstructer.BeginUpdate();
+            for (int i = 0; i < count; i++)
+                ICTanjiConstructer.AppendChunk(value);
+            ICTanjiConstructer.EndUpdate();
         }
         private void ICAppendBooleanBtn_Click(object sender, EventArgs e)
         {
-            ICTanjiConstructer.AppendChunk((!string.IsNullOrEmpty(ICValueTxt.Text) && (ICValueTxt.Text[0] == 't' || ICValueTxt.Text[0] == '1')));
+            int count = (int)ICCountTxt.Value;
+            bool value = (!string.IsNullOrEmpty(ICValueTxt.Text) && (ICValueTxt.Text[0] == 't' || ICValueTxt.Text[0] == '1'));
+
+            ICTanjiConstructer.BeginUpdate();
+            for (int i = 0; i < count; i++)
+                ICTanjiConstructer.AppendChunk(value);
+            ICTanjiConstructer.EndUpdate();
         }
 
         private void ICMoveUpBtn_Click(object sender, EventArgs e)
@@ -160,13 +173,20 @@ namespace Tanji
         }
         private void ICEditBtn_Click(object sender, EventArgs e)
         {
-            var tanjiEditF = new TanjiConstructEdit(ICTanjiConstructer);
+            var tanjiEditF = new TanjiConstructerEdit(ICTanjiConstructer);
             tanjiEditF.ShowDialog();
         }
         private void ICTransferBtn_Click(object sender, EventArgs e)
         {
             HMessage packet = GetConstructerPacket();
             if (packet != null) IPacketTxt.Text = packet.ToString();
+        }
+        private void ICSchedulerBtn_Click(object sender, EventArgs e)
+        {
+            IInjectionTabs.SelectTab(ISchedulerTab);
+
+            HMessage packet = GetConstructerPacket();
+            if (packet != null) ISPacketTxt.Text = packet.ToString();
         }
 
         private void ICCopyPacketBtn_Click(object sender, EventArgs e)
@@ -226,7 +246,8 @@ namespace Tanji
         }
         private void ISEditBtn_Click(object sender, EventArgs e)
         {
-
+            var tanjiEditF = new TanjiSchedulerEdit(ISTanjiScheduler);
+            tanjiEditF.ShowDialog();
         }
         private void ISCreateBtn_Click(object sender, EventArgs e)
         {
@@ -234,7 +255,7 @@ namespace Tanji
             if (packet == null) return;
 
             ISStopAllBtn.Enabled = true;
-            ISTanjiScheduler.AddSchedule(new HSchedule(packet, (int)ISIntervalTxt.Value, (int)ISBurstTxt.Value), true, ISDescriptionTxt.Text);
+            ISTanjiScheduler.AddSchedule(new HSchedule(packet, (int)ISIntervalTxt.Value, (int)ISBurstTxt.Value), ISAutoStartChckbx.Checked, ISDescriptionTxt.Text);
 
             SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.SchedulesRunning, ISTanjiScheduler.Items.Count);
         }
@@ -256,7 +277,30 @@ namespace Tanji
         private void ISTanjiScheduler_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (ISEditBtn.Enabled != e.IsSelected)
-                ISRemoveBtn.Enabled = ISToggleBtn.Enabled = e.IsSelected;
+                ISRemoveBtn.Enabled = ISToggleBtn.Enabled = ISEditBtn.Enabled = e.IsSelected;
+        }
+        #endregion
+
+        #region Primitive Related Methods
+        private void IPPacketTxt_TextChanged(object sender, EventArgs e)
+        {
+            IPacketTxt.Text = IPPacketTxt.Text;
+            if (IPacketTxt.TextLength < 1) return;
+
+            var packet = new HMessage(IPacketTxt.Text);
+            bool isCorrupted = (packet.IsCorrupted || packet.Protocol != Game.Protocol);
+            const string PacketInfoFormat = "Header: {0} | Length: {1} | Corrupted:";
+
+            IPIsCorruptedLbl.Text = isCorrupted.ToString();
+            IPPacketInfoLbl.Text = string.Format(PacketInfoFormat, isCorrupted ? 0 : packet.Header, packet.Length);
+
+            IPIsCorruptedLbl.Location = new Point((IPPacketInfoLbl.Location.X + IPPacketInfoLbl.Width) - 5, IPIsCorruptedLbl.Location.Y);
+            IPIsCorruptedLbl.ForeColor = isCorrupted ? Color.Firebrick : SystemColors.HotTrack;
+        }
+        private void IInjectionTabs_Selected(object sender, TabControlEventArgs e)
+        {
+            if (IPacketTxt.ReadOnly = (e.TabPage == IPrimitiveTab))
+                IPPacketTxt.Text = IPacketTxt.Text;
         }
         #endregion
 
@@ -353,27 +397,18 @@ namespace Tanji
         }
         #endregion
 
-        #region Extensions Related Methods
-        private void ETanjiExtensionViewer_ItemActivate(object sender, EventArgs e)
-        {
-            ETanjiExtensionViewer.InitializeSelected();
-        }
-        private void ExtensionUnloaded(object sender, ExtensionUnloadedEventArgs e)
-        {
-            ETanjiExtensionViewer.RemoveExtension(e.Extension);
-
-            if (_contractor.ExtensionsLoaded < 1)
-                EOpenBtn.Enabled = EUninstallBtn.Enabled = false;
-        }
-
+        #region Extension Related Methods
         private void EOpenBtn_Click(object sender, EventArgs e)
         {
-            ETanjiExtensionViewer.GetSelectedExtension().InitializeExtension();
+            ETanjiExtensionViewer.OpenSelected();
         }
         private void EUninstallBtn_Click(object sender, EventArgs e)
         {
-            IHExtension extension = ETanjiExtensionViewer.GetSelectedExtension();
-            _contractor.InitiateUnload(extension);
+            ETanjiExtensionViewer.UninstallSelected();
+
+            const string ExtensionFormat = "Extensions Installed: {0}";
+            ExtensionsInstalledTxt.Text = string.Format(ExtensionFormat,
+                _contractor.Extensions.Count);
         }
 
         private void ExtensionViewer_DragDrop(object sender, DragEventArgs e)
@@ -381,7 +416,7 @@ namespace Tanji
             if (e.Effect != DragDropEffects.Copy) return;
 
             string path = ((string[])(e.Data.GetData(DataFormats.FileDrop)))[0];
-            AddExtension(path);
+            LoadSingleExtension(path);
         }
         private void ExtensionViewer_DragEnter(object sender, DragEventArgs e)
         {
@@ -392,9 +427,13 @@ namespace Tanji
         private void EInstallExtensionBtn_Click(object sender, EventArgs e)
         {
             ChooseExtensionDlg.FileName = ChooseExtensionDlg.SafeFileName;
-            if (ChooseExtensionDlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+            if (ChooseExtensionDlg.ShowDialog() != DialogResult.OK) return;
 
-            AddExtension(ChooseExtensionDlg.FileName);
+            LoadSingleExtension(ChooseExtensionDlg.FileName);
+        }
+        private void ETanjiExtensionViewer_ItemActivate(object sender, EventArgs e)
+        {
+            ETanjiExtensionViewer.OpenSelected();
         }
         private void ETanjiExtensionViewer_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
@@ -485,21 +524,21 @@ namespace Tanji
             if (_packetloggerF.ViewOutgoing)
                 _packetloggerF.PushToQueue(e.Packet);
 
-            _contractor.DistributeOutgoing(e.Packet.ToBytes());
+            _contractor.ProcessOutgoing(e.Packet.ToBytes());
         }
         private void Game_DataToClient(object sender, DataToEventArgs e)
         {
             if (_packetloggerF.ViewIncoming)
                 _packetloggerF.PushToQueue(e.Packet);
 
-            _contractor.DistributeIncoming(e.Packet.ToBytes());
+            _contractor.ProcessIncoming(e.Packet.ToBytes());
         }
 
         private void Game_Disconnected(object sender, DisconnectedEventArgs e)
         {
             Game.LockEvents = Game.CaptureEvents = false;
             e.UnsubscribeFromEvents = true;
-            Task.Factory.StartNew(Reinitiate, TaskCreationOptions.LongRunning);
+            Task.Factory.StartNew(Reinitiate);
         }
         #endregion
 
@@ -524,7 +563,13 @@ namespace Tanji
 
             Text = string.Format(TanjiTitleFormat, Game.Host, Game.Port);
             ProtocolTxt.Text = string.Format(ProtocolFormat, Game.Protocol);
-            _contractor.Connection = Game;
+
+            if (_contractor == null)
+            {
+                _contractor = new Contractor(Game);
+                ETanjiExtensionViewer.Contractor = _contractor;
+                LoadTanjiExtensions();
+            }
 
             Show();
             BringToFront();
@@ -532,6 +577,7 @@ namespace Tanji
             _packetloggerF.Show();
             _packetloggerF.BringToFront();
         }
+
         private void Reinitiate()
         {
             if (InvokeRequired) { Invoke(_reinitiate); return; }
@@ -560,12 +606,26 @@ namespace Tanji
             Game.DataToServer -= Handshake_ToServer;
             Game.DataToServer += Game_DataToServer;
         }
-        private void AddExtension(string path)
+        private void LoadTanjiExtensions()
         {
-            IHExtension extension = _contractor.LoadExtension(path);
+            if (!Directory.Exists("Extensions")) return;
 
-            if (extension != null)
-                ETanjiExtensionViewer.AddExtension(extension);
+            var extDirInfo = new DirectoryInfo("Extensions");
+            FileInfo[] extDirFiles = extDirInfo.GetFiles();
+
+            foreach (FileInfo extensionFile in extDirFiles)
+            {
+                if (extensionFile.Extension != ".dll") continue;
+                LoadSingleExtension(extensionFile.FullName);
+            }
+        }
+        private void LoadSingleExtension(string path)
+        {
+            ETanjiExtensionViewer.InstallExtension(path);
+
+            const string ExtensionFormat = "Extensions Installed: {0}";
+            ExtensionsInstalledTxt.Text = string.Format(ExtensionFormat,
+                _contractor.Extensions.Count);
         }
 
         private bool AttemptHandshake(HMessage packet)
@@ -582,7 +642,7 @@ namespace Tanji
             else if (!string.IsNullOrWhiteSpace(BannerUrl))
             {
                 token = packet.ReadString(ref position);
-                banner = SKore.GetHotelBanner(BannerUrl, Cookies, UserAgent);
+                banner = GetHotelBanner(BannerUrl, Cookies, UserAgent);
             }
 
             return RsaKeyVerifier(_fakeClient, signedPrime, signedGenerator, banner, token);
@@ -635,6 +695,19 @@ namespace Tanji
 
             MessageBox.Show(BadHeader, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             return null;
+        }
+
+        private Bitmap GetHotelBanner(string url, string cookies, string userAgent)
+        {
+            using (var webClientEx = new WebClient())
+            {
+                webClientEx.Proxy = null;
+                webClientEx.Headers["Cookie"] = cookies;
+                webClientEx.Headers["User-Agent"] = userAgent;
+                byte[] bannerData = webClientEx.DownloadData(url);
+                using (var memoryStream = new MemoryStream(bannerData))
+                    return new Bitmap(memoryStream);
+            }
         }
         #endregion
 

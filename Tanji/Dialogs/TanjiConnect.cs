@@ -12,7 +12,6 @@ using Sulakore;
 using Sulakore.Editor;
 using Sulakore.Editor.Tags;
 using Sulakore.Communication;
-using Sulakore.Communication.Proxy;
 
 namespace Tanji.Dialogs
 {
@@ -263,7 +262,7 @@ namespace Tanji.Dialogs
                 #region Extract 'hotelview.banner.url'
                 if (!IsOriginal && response.Contains(HotelViewBannerUrl))
                 {
-                    Main.Cookies = e.Cookies;
+                    Main.Cookies = e.RawCookies;
                     Main.UserAgent = e.UserAgent;
                     Main.BannerUrl = response.GetChild(HotelViewBannerUrl, ',');
                     if (Main.BannerUrl.StartsWith("\"")) Main.BannerUrl = Main.BannerUrl.Split('"')[1] + "?token=";

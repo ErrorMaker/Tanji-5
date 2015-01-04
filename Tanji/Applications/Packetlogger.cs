@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Drawing;
 using System.Threading;
-using Sulakore.Protocol;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+
+using Sulakore.Protocol;
 
 namespace Tanji.Applications
 {
@@ -94,7 +95,7 @@ namespace Tanji.Applications
         {
             TopMost = TopMostBtn.Checked;
         }
-        private void ClearLogBtn_Click(object sender, EventArgs e)
+        private void EmptyLogBtn_Click(object sender, EventArgs e)
         {
             LoggerTxt.Clear();
         }

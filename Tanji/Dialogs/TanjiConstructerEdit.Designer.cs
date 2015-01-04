@@ -1,6 +1,6 @@
 ﻿namespace Tanji.Dialogs
 {
-    partial class TanjiConstructEdit
+    partial class TanjiConstructerEdit
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TanjiConstructEdit));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TanjiConstructerEdit));
             this.ValueTxt = new System.Windows.Forms.TextBox();
             this.TypeTxt = new System.Windows.Forms.ComboBox();
             this.UpdateBtn = new Tanji.Controls.TanjiButton();

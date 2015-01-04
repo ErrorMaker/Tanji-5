@@ -38,7 +38,7 @@
             this.ToggleOutgoingBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ToggleIncomingBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsSep = new System.Windows.Forms.ToolStripSeparator();
-            this.ClearLogBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.EmptyLogBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayFiltersBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayVisualSplitBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,7 +101,7 @@
             this.ToggleOutgoingBtn,
             this.ToggleIncomingBtn,
             this.OptionsSep,
-            this.ClearLogBtn});
+            this.EmptyLogBtn});
             this.OptionsBtn.Name = "OptionsBtn";
             this.OptionsBtn.Size = new System.Drawing.Size(61, 20);
             this.OptionsBtn.Text = "Options";
@@ -131,12 +131,13 @@
             this.OptionsSep.Name = "OptionsSep";
             this.OptionsSep.Size = new System.Drawing.Size(193, 6);
             // 
-            // ClearLogBtn
+            // EmptyLogBtn
             // 
-            this.ClearLogBtn.Name = "ClearLogBtn";
-            this.ClearLogBtn.Size = new System.Drawing.Size(196, 22);
-            this.ClearLogBtn.Text = "Clear Log";
-            this.ClearLogBtn.Click += new System.EventHandler(this.ClearLogBtn_Click);
+            this.EmptyLogBtn.Name = "EmptyLogBtn";
+            this.EmptyLogBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.EmptyLogBtn.Size = new System.Drawing.Size(196, 22);
+            this.EmptyLogBtn.Text = "Empty Log";
+            this.EmptyLogBtn.Click += new System.EventHandler(this.EmptyLogBtn_Click);
             // 
             // SettingsBtn
             // 
@@ -235,7 +236,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToggleOutgoingBtn;
         private System.Windows.Forms.ToolStripMenuItem ToggleIncomingBtn;
         private System.Windows.Forms.ToolStripSeparator OptionsSep;
-        private System.Windows.Forms.ToolStripMenuItem ClearLogBtn;
+        private System.Windows.Forms.ToolStripMenuItem EmptyLogBtn;
         private System.Windows.Forms.ToolStripMenuItem SettingsBtn;
         private System.Windows.Forms.ToolStripMenuItem DisplayFiltersBtn;
         private System.Windows.Forms.ToolStripMenuItem DisplayVisualSplitBtn;

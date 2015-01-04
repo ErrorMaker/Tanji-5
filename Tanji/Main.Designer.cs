@@ -33,15 +33,16 @@
             this.TanjiStrip = new System.Windows.Forms.StatusStrip();
             this.ProtocolTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.SchedulesTxt = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ExtensionsTxt = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ExtensionsInstalledTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.TanjiTabs = new Tanji.Controls.TanjiTabControl();
             this.InjectionTab = new System.Windows.Forms.TabPage();
             this.IPacketTxt = new System.Windows.Forms.TextBox();
             this.PSendToClientBtn = new Tanji.Controls.TanjiButton();
             this.PSendToServerBtn = new Tanji.Controls.TanjiButton();
             this.IInjectionTabs = new Tanji.Controls.TanjiTabControl();
-            this.IPrimitiveTab = new System.Windows.Forms.TabPage();
             this.IConstructerTab = new System.Windows.Forms.TabPage();
+            this.ICCountTxt = new System.Windows.Forms.NumericUpDown();
+            this.ICCountLbl = new System.Windows.Forms.Label();
             this.ICEditBtn = new Tanji.Controls.TanjiButton();
             this.ICRemoveBtn = new Tanji.Controls.TanjiButton();
             this.ICTransferBtn = new Tanji.Controls.TanjiButton();
@@ -51,18 +52,21 @@
             this.ICAppendBooleanBtn = new Tanji.Controls.TanjiButton();
             this.ICAppendStringBtn = new Tanji.Controls.TanjiButton();
             this.ICAppendIntegerBtn = new Tanji.Controls.TanjiButton();
-            this.HeaderLbl = new System.Windows.Forms.Label();
+            this.ICHeaderLbl = new System.Windows.Forms.Label();
             this.ICHeaderTxt = new System.Windows.Forms.TextBox();
-            this.ValueLbl = new System.Windows.Forms.Label();
+            this.ICValueLbl = new System.Windows.Forms.Label();
             this.ICValueTxt = new System.Windows.Forms.TextBox();
-            this.ICTanjiConstructer = new Sulakore.Protocol.Controls.HMConstructer();
+            this.ICTanjiConstructer = new Sulakore.Protocol.Controls.Constructer();
             this.ICConstructMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ICSendToClientBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ICSendToServerBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.IConstructSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.ICCopyPacketBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ICTransferToBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ICSchedulerBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ISchedulerTab = new System.Windows.Forms.TabPage();
-            this.ISTanjiScheduler = new Sulakore.Protocol.Controls.HMScheduler();
+            this.ISAutoStartChckbx = new System.Windows.Forms.CheckBox();
+            this.ISTanjiScheduler = new Sulakore.Protocol.Controls.Scheduler();
             this.ISBurstLbl = new System.Windows.Forms.Label();
             this.ISBurstTxt = new System.Windows.Forms.NumericUpDown();
             this.ISIntervalLbl = new System.Windows.Forms.Label();
@@ -78,6 +82,10 @@
             this.ISEditBtn = new Tanji.Controls.TanjiButton();
             this.ISRemoveBtn = new Tanji.Controls.TanjiButton();
             this.ISCreateBtn = new Tanji.Controls.TanjiButton();
+            this.IPrimitiveTab = new System.Windows.Forms.TabPage();
+            this.IPIsCorruptedLbl = new System.Windows.Forms.Label();
+            this.IPPacketInfoLbl = new System.Windows.Forms.Label();
+            this.IPPacketTxt = new System.Windows.Forms.TextBox();
             this.ITriggersTab = new System.Windows.Forms.TabPage();
             this.IFiltersTab = new System.Windows.Forms.TabPage();
             this.EncoderDecoderTab = new System.Windows.Forms.TabPage();
@@ -113,7 +121,7 @@
             this.AncientIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.ToolboxTab = new System.Windows.Forms.TabPage();
             this.ExtensionsTab = new System.Windows.Forms.TabPage();
-            this.ETanjiExtensionViewer = new Sulakore.Communication.Bridge.HExtensionViewer();
+            this.ETanjiExtensionViewer = new Sulakore.Extensions.Controls.ExtensionView();
             this.EExtensionsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EUninstallBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,10 +134,12 @@
             this.InjectionTab.SuspendLayout();
             this.IInjectionTabs.SuspendLayout();
             this.IConstructerTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ICCountTxt)).BeginInit();
             this.ICConstructMenu.SuspendLayout();
             this.ISchedulerTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ISIntervalTxt)).BeginInit();
+            this.IPrimitiveTab.SuspendLayout();
             this.EncoderDecoderTab.SuspendLayout();
             this.ModernEncodingGrpbx.SuspendLayout();
             this.EDAdvVL64DecoderGrpbx.SuspendLayout();
@@ -144,7 +154,7 @@
             this.TanjiStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProtocolTxt,
             this.SchedulesTxt,
-            this.ExtensionsTxt});
+            this.ExtensionsInstalledTxt});
             this.TanjiStrip.Location = new System.Drawing.Point(0, 345);
             this.TanjiStrip.Name = "TanjiStrip";
             this.TanjiStrip.Size = new System.Drawing.Size(479, 24);
@@ -166,11 +176,11 @@
             this.SchedulesTxt.Size = new System.Drawing.Size(123, 19);
             this.SchedulesTxt.Text = "Schedules Active: 0/0";
             // 
-            // ExtensionsTxt
+            // ExtensionsInstalledTxt
             // 
-            this.ExtensionsTxt.Name = "ExtensionsTxt";
-            this.ExtensionsTxt.Size = new System.Drawing.Size(121, 19);
-            this.ExtensionsTxt.Text = "Extensions Active: 0/0";
+            this.ExtensionsInstalledTxt.Name = "ExtensionsInstalledTxt";
+            this.ExtensionsInstalledTxt.Size = new System.Drawing.Size(121, 19);
+            this.ExtensionsInstalledTxt.Text = "Extensions Installed: 0";
             // 
             // TanjiTabs
             // 
@@ -209,6 +219,7 @@
             this.IPacketTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.IPacketTxt.Location = new System.Drawing.Point(6, 286);
+            this.IPacketTxt.MaxLength = 2147483647;
             this.IPacketTxt.Name = "IPacketTxt";
             this.IPacketTxt.Size = new System.Drawing.Size(247, 20);
             this.IPacketTxt.TabIndex = 5;
@@ -240,9 +251,9 @@
             // IInjectionTabs
             // 
             this.IInjectionTabs.Alignment = System.Windows.Forms.TabAlignment.Right;
-            this.IInjectionTabs.Controls.Add(this.IPrimitiveTab);
             this.IInjectionTabs.Controls.Add(this.IConstructerTab);
             this.IInjectionTabs.Controls.Add(this.ISchedulerTab);
+            this.IInjectionTabs.Controls.Add(this.IPrimitiveTab);
             this.IInjectionTabs.Controls.Add(this.ITriggersTab);
             this.IInjectionTabs.Controls.Add(this.IFiltersTab);
             this.IInjectionTabs.DisplayBoundary = true;
@@ -256,20 +267,13 @@
             this.IInjectionTabs.Size = new System.Drawing.Size(465, 276);
             this.IInjectionTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.IInjectionTabs.TabIndex = 0;
-            // 
-            // IPrimitiveTab
-            // 
-            this.IPrimitiveTab.BackColor = System.Drawing.Color.White;
-            this.IPrimitiveTab.Location = new System.Drawing.Point(4, 4);
-            this.IPrimitiveTab.Name = "IPrimitiveTab";
-            this.IPrimitiveTab.Padding = new System.Windows.Forms.Padding(3);
-            this.IPrimitiveTab.Size = new System.Drawing.Size(391, 268);
-            this.IPrimitiveTab.TabIndex = 0;
-            this.IPrimitiveTab.Text = "Primitive";
+            this.IInjectionTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.IInjectionTabs_Selected);
             // 
             // IConstructerTab
             // 
             this.IConstructerTab.BackColor = System.Drawing.Color.White;
+            this.IConstructerTab.Controls.Add(this.ICCountTxt);
+            this.IConstructerTab.Controls.Add(this.ICCountLbl);
             this.IConstructerTab.Controls.Add(this.ICEditBtn);
             this.IConstructerTab.Controls.Add(this.ICRemoveBtn);
             this.IConstructerTab.Controls.Add(this.ICTransferBtn);
@@ -279,9 +283,9 @@
             this.IConstructerTab.Controls.Add(this.ICAppendBooleanBtn);
             this.IConstructerTab.Controls.Add(this.ICAppendStringBtn);
             this.IConstructerTab.Controls.Add(this.ICAppendIntegerBtn);
-            this.IConstructerTab.Controls.Add(this.HeaderLbl);
+            this.IConstructerTab.Controls.Add(this.ICHeaderLbl);
             this.IConstructerTab.Controls.Add(this.ICHeaderTxt);
-            this.IConstructerTab.Controls.Add(this.ValueLbl);
+            this.IConstructerTab.Controls.Add(this.ICValueLbl);
             this.IConstructerTab.Controls.Add(this.ICValueTxt);
             this.IConstructerTab.Controls.Add(this.ICTanjiConstructer);
             this.IConstructerTab.Location = new System.Drawing.Point(4, 4);
@@ -290,6 +294,33 @@
             this.IConstructerTab.Size = new System.Drawing.Size(391, 268);
             this.IConstructerTab.TabIndex = 1;
             this.IConstructerTab.Text = "Constructer";
+            // 
+            // ICCountTxt
+            // 
+            this.ICCountTxt.Location = new System.Drawing.Point(326, 19);
+            this.ICCountTxt.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ICCountTxt.Name = "ICCountTxt";
+            this.ICCountTxt.Size = new System.Drawing.Size(59, 20);
+            this.ICCountTxt.TabIndex = 24;
+            this.ICCountTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ICCountTxt.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // ICCountLbl
+            // 
+            this.ICCountLbl.AutoSize = true;
+            this.ICCountLbl.Location = new System.Drawing.Point(324, 3);
+            this.ICCountLbl.Name = "ICCountLbl";
+            this.ICCountLbl.Size = new System.Drawing.Size(35, 13);
+            this.ICCountLbl.TabIndex = 23;
+            this.ICCountLbl.Text = "Count";
             // 
             // ICEditBtn
             // 
@@ -403,14 +434,14 @@
             this.ICAppendIntegerBtn.Text = "Append Integer";
             this.ICAppendIntegerBtn.Click += new System.EventHandler(this.ICAppendIntegerBtn_Click);
             // 
-            // HeaderLbl
+            // ICHeaderLbl
             // 
-            this.HeaderLbl.AutoSize = true;
-            this.HeaderLbl.Location = new System.Drawing.Point(6, 3);
-            this.HeaderLbl.Name = "HeaderLbl";
-            this.HeaderLbl.Size = new System.Drawing.Size(42, 13);
-            this.HeaderLbl.TabIndex = 13;
-            this.HeaderLbl.Text = "Header";
+            this.ICHeaderLbl.AutoSize = true;
+            this.ICHeaderLbl.Location = new System.Drawing.Point(3, 3);
+            this.ICHeaderLbl.Name = "ICHeaderLbl";
+            this.ICHeaderLbl.Size = new System.Drawing.Size(42, 13);
+            this.ICHeaderLbl.TabIndex = 13;
+            this.ICHeaderLbl.Text = "Header";
             // 
             // ICHeaderTxt
             // 
@@ -421,20 +452,20 @@
             this.ICHeaderTxt.TabIndex = 12;
             this.ICHeaderTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // ValueLbl
+            // ICValueLbl
             // 
-            this.ValueLbl.AutoSize = true;
-            this.ValueLbl.Location = new System.Drawing.Point(76, 3);
-            this.ValueLbl.Name = "ValueLbl";
-            this.ValueLbl.Size = new System.Drawing.Size(34, 13);
-            this.ValueLbl.TabIndex = 11;
-            this.ValueLbl.Text = "Value";
+            this.ICValueLbl.AutoSize = true;
+            this.ICValueLbl.Location = new System.Drawing.Point(76, 3);
+            this.ICValueLbl.Name = "ICValueLbl";
+            this.ICValueLbl.Size = new System.Drawing.Size(34, 13);
+            this.ICValueLbl.TabIndex = 11;
+            this.ICValueLbl.Text = "Value";
             // 
             // ICValueTxt
             // 
             this.ICValueTxt.Location = new System.Drawing.Point(79, 19);
             this.ICValueTxt.Name = "ICValueTxt";
-            this.ICValueTxt.Size = new System.Drawing.Size(306, 20);
+            this.ICValueTxt.Size = new System.Drawing.Size(241, 20);
             this.ICValueTxt.TabIndex = 10;
             this.ICValueTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -464,9 +495,10 @@
             this.ICSendToClientBtn,
             this.ICSendToServerBtn,
             this.IConstructSeperator,
-            this.ICCopyPacketBtn});
+            this.ICCopyPacketBtn,
+            this.ICTransferToBtn});
             this.ICConstructMenu.Name = "ConstructMenu";
-            this.ICConstructMenu.Size = new System.Drawing.Size(153, 76);
+            this.ICConstructMenu.Size = new System.Drawing.Size(153, 98);
             // 
             // ICSendToClientBtn
             // 
@@ -494,9 +526,25 @@
             this.ICCopyPacketBtn.Text = "Copy Packet";
             this.ICCopyPacketBtn.Click += new System.EventHandler(this.ICCopyPacketBtn_Click);
             // 
+            // ICTransferToBtn
+            // 
+            this.ICTransferToBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ICSchedulerBtn});
+            this.ICTransferToBtn.Name = "ICTransferToBtn";
+            this.ICTransferToBtn.Size = new System.Drawing.Size(152, 22);
+            this.ICTransferToBtn.Text = "Transfer To";
+            // 
+            // ICSchedulerBtn
+            // 
+            this.ICSchedulerBtn.Name = "ICSchedulerBtn";
+            this.ICSchedulerBtn.Size = new System.Drawing.Size(126, 22);
+            this.ICSchedulerBtn.Text = "Scheduler";
+            this.ICSchedulerBtn.Click += new System.EventHandler(this.ICSchedulerBtn_Click);
+            // 
             // ISchedulerTab
             // 
             this.ISchedulerTab.BackColor = System.Drawing.Color.White;
+            this.ISchedulerTab.Controls.Add(this.ISAutoStartChckbx);
             this.ISchedulerTab.Controls.Add(this.ISTanjiScheduler);
             this.ISchedulerTab.Controls.Add(this.ISBurstLbl);
             this.ISchedulerTab.Controls.Add(this.ISBurstTxt);
@@ -519,6 +567,16 @@
             this.ISchedulerTab.Size = new System.Drawing.Size(391, 268);
             this.ISchedulerTab.TabIndex = 2;
             this.ISchedulerTab.Text = "Scheduler";
+            // 
+            // ISAutoStartChckbx
+            // 
+            this.ISAutoStartChckbx.AutoSize = true;
+            this.ISAutoStartChckbx.Location = new System.Drawing.Point(151, 158);
+            this.ISAutoStartChckbx.Name = "ISAutoStartChckbx";
+            this.ISAutoStartChckbx.Size = new System.Drawing.Size(73, 17);
+            this.ISAutoStartChckbx.TabIndex = 42;
+            this.ISAutoStartChckbx.Text = "Auto Start";
+            this.ISAutoStartChckbx.UseVisualStyleBackColor = true;
             // 
             // ISTanjiScheduler
             // 
@@ -570,9 +628,9 @@
             this.ISIntervalLbl.AutoSize = true;
             this.ISIntervalLbl.Location = new System.Drawing.Point(312, 159);
             this.ISIntervalLbl.Name = "ISIntervalLbl";
-            this.ISIntervalLbl.Size = new System.Drawing.Size(70, 13);
+            this.ISIntervalLbl.Size = new System.Drawing.Size(64, 13);
             this.ISIntervalLbl.TabIndex = 38;
-            this.ISIntervalLbl.Text = "Interval ( ms )";
+            this.ISIntervalLbl.Text = "Interval (ms)";
             // 
             // ISIntervalTxt
             // 
@@ -630,6 +688,7 @@
             // ISPacketTxt
             // 
             this.ISPacketTxt.Location = new System.Drawing.Point(6, 175);
+            this.ISPacketTxt.MaxLength = 2147483647;
             this.ISPacketTxt.Name = "ISPacketTxt";
             this.ISPacketTxt.Size = new System.Drawing.Size(221, 20);
             this.ISPacketTxt.TabIndex = 33;
@@ -708,6 +767,48 @@
             this.ISCreateBtn.TabIndex = 25;
             this.ISCreateBtn.Text = "Create";
             this.ISCreateBtn.Click += new System.EventHandler(this.ISCreateBtn_Click);
+            // 
+            // IPrimitiveTab
+            // 
+            this.IPrimitiveTab.BackColor = System.Drawing.Color.White;
+            this.IPrimitiveTab.Controls.Add(this.IPIsCorruptedLbl);
+            this.IPrimitiveTab.Controls.Add(this.IPPacketInfoLbl);
+            this.IPrimitiveTab.Controls.Add(this.IPPacketTxt);
+            this.IPrimitiveTab.Location = new System.Drawing.Point(4, 4);
+            this.IPrimitiveTab.Name = "IPrimitiveTab";
+            this.IPrimitiveTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IPrimitiveTab.Size = new System.Drawing.Size(391, 268);
+            this.IPrimitiveTab.TabIndex = 0;
+            this.IPrimitiveTab.Text = "Primitive";
+            // 
+            // IPIsCorruptedLbl
+            // 
+            this.IPIsCorruptedLbl.AutoSize = true;
+            this.IPIsCorruptedLbl.ForeColor = System.Drawing.Color.Firebrick;
+            this.IPIsCorruptedLbl.Location = new System.Drawing.Point(165, 3);
+            this.IPIsCorruptedLbl.Name = "IPIsCorruptedLbl";
+            this.IPIsCorruptedLbl.Size = new System.Drawing.Size(29, 13);
+            this.IPIsCorruptedLbl.TabIndex = 2;
+            this.IPIsCorruptedLbl.Text = "True";
+            // 
+            // IPPacketInfoLbl
+            // 
+            this.IPPacketInfoLbl.AutoSize = true;
+            this.IPPacketInfoLbl.Location = new System.Drawing.Point(6, 3);
+            this.IPPacketInfoLbl.Name = "IPPacketInfoLbl";
+            this.IPPacketInfoLbl.Size = new System.Drawing.Size(164, 13);
+            this.IPPacketInfoLbl.TabIndex = 1;
+            this.IPPacketInfoLbl.Text = "Header: 0 | Length: 0 | Corrupted:";
+            // 
+            // IPPacketTxt
+            // 
+            this.IPPacketTxt.Location = new System.Drawing.Point(6, 19);
+            this.IPPacketTxt.MaxLength = 2147483647;
+            this.IPPacketTxt.Multiline = true;
+            this.IPPacketTxt.Name = "IPPacketTxt";
+            this.IPPacketTxt.Size = new System.Drawing.Size(379, 243);
+            this.IPPacketTxt.TabIndex = 0;
+            this.IPPacketTxt.TextChanged += new System.EventHandler(this.IPPacketTxt_TextChanged);
             // 
             // ITriggersTab
             // 
@@ -1069,7 +1170,9 @@
             // 
             // ETanjiExtensionViewer
             // 
+            this.ETanjiExtensionViewer.AllowDrop = true;
             this.ETanjiExtensionViewer.ContextMenuStrip = this.EExtensionsMenu;
+            this.ETanjiExtensionViewer.Contractor = null;
             this.ETanjiExtensionViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ETanjiExtensionViewer.FullRowSelect = true;
             this.ETanjiExtensionViewer.GridLines = true;
@@ -1096,7 +1199,7 @@
             this.EExtensionsSeperator,
             this.EInstallExtensionBtn});
             this.EExtensionsMenu.Name = "ConstructMenu";
-            this.EExtensionsMenu.Size = new System.Drawing.Size(159, 98);
+            this.EExtensionsMenu.Size = new System.Drawing.Size(159, 76);
             // 
             // EOpenBtn
             // 
@@ -1166,11 +1269,14 @@
             this.IInjectionTabs.ResumeLayout(false);
             this.IConstructerTab.ResumeLayout(false);
             this.IConstructerTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ICCountTxt)).EndInit();
             this.ICConstructMenu.ResumeLayout(false);
             this.ISchedulerTab.ResumeLayout(false);
             this.ISchedulerTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ISIntervalTxt)).EndInit();
+            this.IPrimitiveTab.ResumeLayout(false);
+            this.IPrimitiveTab.PerformLayout();
             this.EncoderDecoderTab.ResumeLayout(false);
             this.ModernEncodingGrpbx.ResumeLayout(false);
             this.ModernEncodingGrpbx.PerformLayout();
@@ -1224,7 +1330,7 @@
         private Controls.TanjiButton AncientDecypherShortBtn;
         private Controls.TanjiButton AncientDecypherIntegerBtn;
         private System.Windows.Forms.TextBox AncientIntegerInputTxt;
-        private System.Windows.Forms.ToolStripStatusLabel ExtensionsTxt;
+        private System.Windows.Forms.ToolStripStatusLabel ExtensionsInstalledTxt;
         private System.Windows.Forms.GroupBox ModernEncodingGrpbx;
         private System.Windows.Forms.TextBox ModernShortOutputTxt;
         private System.Windows.Forms.TextBox ModernIntegerOutputTxt;
@@ -1235,10 +1341,10 @@
         private Controls.TanjiButton ModernDecypherIntegerBtn;
         private System.Windows.Forms.TextBox ModernIntegerInputTxt;
         private System.Windows.Forms.TabPage ExtensionsTab;
-        private Sulakore.Protocol.Controls.HMConstructer ICTanjiConstructer;
-        private System.Windows.Forms.Label HeaderLbl;
+        private Sulakore.Protocol.Controls.Constructer ICTanjiConstructer;
+        private System.Windows.Forms.Label ICHeaderLbl;
         private System.Windows.Forms.TextBox ICHeaderTxt;
-        private System.Windows.Forms.Label ValueLbl;
+        private System.Windows.Forms.Label ICValueLbl;
         private System.Windows.Forms.TextBox ICValueTxt;
         private Controls.TanjiButton ICAppendBooleanBtn;
         private Controls.TanjiButton ICAppendStringBtn;
@@ -1275,9 +1381,17 @@
         private Controls.TanjiButton ISEditBtn;
         private Controls.TanjiButton ISRemoveBtn;
         private Controls.TanjiButton ISCreateBtn;
-        private Sulakore.Protocol.Controls.HMScheduler ISTanjiScheduler;
+        private Sulakore.Protocol.Controls.Scheduler ISTanjiScheduler;
         private System.Windows.Forms.OpenFileDialog ChooseExtensionDlg;
-        private Sulakore.Communication.Bridge.HExtensionViewer ETanjiExtensionViewer;
+        private System.Windows.Forms.Label ICCountLbl;
+        private System.Windows.Forms.NumericUpDown ICCountTxt;
+        private System.Windows.Forms.TextBox IPPacketTxt;
+        private System.Windows.Forms.Label IPPacketInfoLbl;
+        private System.Windows.Forms.Label IPIsCorruptedLbl;
+        private System.Windows.Forms.ToolStripMenuItem ICTransferToBtn;
+        private System.Windows.Forms.ToolStripMenuItem ICSchedulerBtn;
+        private System.Windows.Forms.CheckBox ISAutoStartChckbx;
+        private Sulakore.Extensions.Controls.ExtensionView ETanjiExtensionViewer;
 
     }
 }
