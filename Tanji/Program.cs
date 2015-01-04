@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Security.Principal;
-using Sulakore.Communication.Proxy;
+
+using Sulakore.Communication;
 
 namespace Tanji
 {
